@@ -1,0 +1,7 @@
+node_modules
+.vscode
+.idea
+quest
+psd
+dist/pm-gallery-style.js
+dist/style.js
