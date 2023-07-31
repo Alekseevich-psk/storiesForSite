@@ -1,21 +1,10 @@
 .stories-fs {
     padding: 20px 0;
-    overflow-x: auto;
-
-    &__arrow {
-        display: none;
-        cursor: pointer;
-        position: absolute;
-        z-index: 10;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 42px;
-        height: 42px;
-        border: 1px solid gray;
-    }
+    overflow: hidden;
 
     &__track {
         display: flex;
+        transform: translate3d(0, 0, 0);
     }
 
     &__slide {

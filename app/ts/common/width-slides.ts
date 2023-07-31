@@ -12,6 +12,7 @@ type objectParentWidth = {
 export default function widthSlides(wrapper: Element, slides: NodeList, options: Options) {
     let optionWidth: object = options.slidesPerView;
     let parentWidth: objectParentWidth = getWidthParentElements(wrapper);
+    let widthSlide: number;
 
     if (optionWidth == null) {
         optionWidth = {
@@ -22,9 +23,8 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
             960: {
                 count: 8
             },
-
             1280: {
-                count: 12
+                count: 4
             }
         }
     }
@@ -34,6 +34,7 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
     window.addEventListener('resize', () => {
         init();
         // location.reload();
+        
     })
 
     function init() {
@@ -44,7 +45,8 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
     function setWidthItems(count: number) {
         slides.forEach(element => {
             let elem = element as HTMLElement;
-            elem.style.flexBasis = (Number(parentWidth.wrapper) / getCountSlides()) + 'px';
+            widthSlide = Number(parentWidth.wrapper) / getCountSlides();
+            elem.style.flexBasis = widthSlide + 'px';
         });
     }
 
@@ -67,4 +69,6 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
         return res.count;
     }
 
+
+    return widthSlide;
 }
