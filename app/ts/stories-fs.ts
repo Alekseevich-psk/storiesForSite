@@ -52,12 +52,13 @@ class storiesFs {
 
     private nextSlide() {
         if ((this.countScrollWrapper + (this.widthSlide * 2)) > this.getWidthElem(this.wrapperStoriesFs)) return;
+        if (this.widthSlide * this.slidesStoriesFs.length < this.getWidthElem(this.wrapperStoriesFs)) return;
         if (!this.playAnimScroll) this.animationScroll(this.trackStoriesFs, 'next');
     }
 
     private animationScroll(wrapper: HTMLElement, direction: string) {
-        const period: number = 1;
-        const speed: number = 5;
+        const period: number = 3;
+        const speed: number = 1;
 
         let start: number = this.countScrollWrapper;
         this.playAnimScroll = true;
