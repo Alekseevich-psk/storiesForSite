@@ -1,4 +1,5 @@
 import { Options } from './types/options';
+import { Arrows } from './types/arrows';
 import widthSlides from './common/width-slides';
 import initControl from './common/init-control';
 
@@ -15,6 +16,8 @@ class storiesFs {
     private wrapperStoriesFs: Element;
     private trackStoriesFs: HTMLElement;
     private slidesStoriesFs: NodeListOf<Element>;
+
+    private arrowsBtnEl: Arrows;
 
     constructor(wrapper: string, options: Options) {
         this.initSfs(wrapper, options);
@@ -36,7 +39,7 @@ class storiesFs {
         }
 
         this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options);
-        initControl(this.wrapperStoriesFs, options);
+        this.arrowsBtnEl = initControl(this.wrapperStoriesFs, options);
 
         this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {
             if ((event.detail.btn === 'prev')) this.prevSlide();
@@ -52,7 +55,6 @@ class storiesFs {
 
     private nextSlide() {
         if ((this.countScrollWrapper + (this.widthSlide * 2)) > this.getWidthElem(this.wrapperStoriesFs)) return;
-        if (this.widthSlide * this.slidesStoriesFs.length < this.getWidthElem(this.wrapperStoriesFs)) return;
         if (!this.playAnimScroll) this.animationScroll(this.trackStoriesFs, 'next');
     }
 
@@ -75,10 +77,22 @@ class storiesFs {
             };
 
         }, speed);
+
+        // disabled btnArrowsDef
+        (this.countScrollWrapper > 0) ? this.onBtnArrow(this.arrowsBtnEl.defBtnPrev) : this.offBtnArrow(this.arrowsBtnEl.defBtnPrev);
+        (this.countScrollWrapper + this.widthSlide) < this.getWidthElem(this.wrapperStoriesFs) ? this.onBtnArrow(this.arrowsBtnEl.defBtnNext) : this.offBtnArrow(this.arrowsBtnEl.defBtnNext);
     }
 
     private getWidthElem(elem: Element) {
         return elem.clientWidth;
+    }
+
+    private offBtnArrow(btn: Element) {
+        btn.classList.add('disabled');
+    }
+
+    private onBtnArrow(btn: Element) {
+        btn.classList.remove('disabled');
     }
 
 }

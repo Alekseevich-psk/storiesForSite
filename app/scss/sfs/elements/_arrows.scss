@@ -1,5 +1,4 @@
 .stories-fs {
-
     &__arrows {
         &.hide-arrows {
             display: none;
@@ -21,14 +20,21 @@
         background-size: 20% 100%;
         opacity: 0.8;
         transition: $transition;
-
-        &.disabled {
-            opacity: 0.6;
-        }
+        background-color: rgba(255, 255, 255, 0.233);
 
         &:hover {
             background-color: rgba(255, 255, 255, 0.767);
             opacity: 1;
+        }
+
+        &.disabled {
+            opacity: 0.2;
+
+            &:hover {
+                cursor: auto;
+                background-color: rgba(255, 255, 255, 0.233);
+                opacity: 0.2;
+            }
         }
 
         &--prev {

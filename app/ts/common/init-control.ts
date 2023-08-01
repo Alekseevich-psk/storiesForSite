@@ -27,12 +27,14 @@ export default function initControl(wrapper: Element, options: Options) {
             arrows.userBtnNext = elemNext;
             elemNext.addEventListener('click', () => createEventChangeSlide('next'));
         }
-        
+
         arrowsWrapper.classList.add('hide-arrows');
     }
 
     let elemPrevDef = wrapper.querySelector('.stories-fs__arrow--prev');
     let elemNextDef = wrapper.querySelector('.stories-fs__arrow--next');
+
+    elemPrevDef.classList.add('disabled');
 
     if (elemPrevDef) {
         arrows.defBtnPrev = elemPrevDef;
@@ -49,4 +51,6 @@ export default function initControl(wrapper: Element, options: Options) {
             detail: { btn: (motion === 'prev') ? 'prev' : 'next' }
         }));
     }
+
+    return arrows;
 }
