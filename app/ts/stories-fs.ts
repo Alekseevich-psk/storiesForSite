@@ -1,7 +1,10 @@
-import { Options } from './types/options';
-import { Arrows } from './types/arrows';
+import { onBtnArrow, offBtnArrow, getWidthElem } from './common/helpers';
+
 import widthSlides from './common/width-slides';
 import initControl from './common/init-control';
+
+import { Options } from './types/options';
+import { Arrows } from './types/arrows';
 
 
 class storiesFs {
@@ -54,7 +57,7 @@ class storiesFs {
     }
 
     private nextSlide() {
-        if ((this.countScrollWrapper + (this.widthSlide * 2)) > this.getWidthElem(this.wrapperStoriesFs)) return;
+        if ((this.countScrollWrapper + (this.widthSlide * 2)) > getWidthElem(this.wrapperStoriesFs)) return;
         if (!this.playAnimScroll) this.animationScroll(this.trackStoriesFs, 'next');
     }
 
@@ -79,20 +82,8 @@ class storiesFs {
         }, speed);
 
         // disabled btnArrowsDef
-        (this.countScrollWrapper > 0) ? this.onBtnArrow(this.arrowsBtnEl.defBtnPrev) : this.offBtnArrow(this.arrowsBtnEl.defBtnPrev);
-        (this.countScrollWrapper + this.widthSlide) < this.getWidthElem(this.wrapperStoriesFs) ? this.onBtnArrow(this.arrowsBtnEl.defBtnNext) : this.offBtnArrow(this.arrowsBtnEl.defBtnNext);
-    }
-
-    private getWidthElem(elem: Element) {
-        return elem.clientWidth;
-    }
-
-    private offBtnArrow(btn: Element) {
-        btn.classList.add('disabled');
-    }
-
-    private onBtnArrow(btn: Element) {
-        btn.classList.remove('disabled');
+        (this.countScrollWrapper > 0) ? onBtnArrow(this.arrowsBtnEl.defBtnPrev) : offBtnArrow(this.arrowsBtnEl.defBtnPrev);
+        (this.countScrollWrapper + this.widthSlide) < getWidthElem(this.wrapperStoriesFs) ? onBtnArrow(this.arrowsBtnEl.defBtnNext) : offBtnArrow(this.arrowsBtnEl.defBtnNext);
     }
 
 }
