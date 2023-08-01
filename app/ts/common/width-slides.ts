@@ -33,8 +33,6 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
 
     window.addEventListener('resize', () => {
         init();
-        // location.reload();
-        
     })
 
     function init() {

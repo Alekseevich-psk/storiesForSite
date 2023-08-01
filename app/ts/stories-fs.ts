@@ -2,6 +2,8 @@ import { onBtnArrow, offBtnArrow, getWidthElem } from './common/helpers';
 
 import widthSlides from './common/width-slides';
 import initControl from './common/init-control';
+import initFullScreen from './common/innit-fullscreen';
+import createProgress from './common/create-progress';
 
 import { Options } from './types/options';
 import { Arrows } from './types/arrows';
@@ -43,6 +45,9 @@ class storiesFs {
 
         this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         this.arrowsBtnEl = initControl(this.wrapperStoriesFs, options);
+        
+        initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
+        createProgress(this.slidesStoriesFs, options);
 
         this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {
             if ((event.detail.btn === 'prev')) this.prevSlide();

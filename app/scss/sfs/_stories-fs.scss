@@ -2,9 +2,90 @@
     padding: 20px 0;
     overflow: hidden;
 
+    &.fullscreen {
+        position: fixed;
+        padding: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(61, 61, 61, 0.705);
+
+        .stories-fs {
+            &__btn-close {
+                display: block;
+            }
+
+            &__wrapper {
+                display: block;
+            }
+
+            &__slide {
+                flex-basis: 100% !important;
+                min-height: 100vh;
+                padding: 40px 60px;
+                display: flex;
+                justify-content: center;
+
+                @media (max-width: 768px) {
+                    padding: 60px 0;
+                }
+
+                &:hover {
+                    border: 1px solid transparent;
+                }
+            }
+
+            &__preview {
+                display: none;
+            }
+
+            &__arrow {
+                &--prev {
+                    left: 6px;
+                }
+
+                &--next {
+                    right: 6px;
+                }
+            }
+        }
+    }
+
     &__track {
         display: flex;
         transform: translate3d(0, 0, 0);
+    }
+
+    &__wrapper {
+        position: relative;
+        max-width: 480px;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+
+        @media (max-width: 768px) {
+            max-width: 96%;
+        }
+    }
+
+    &__inner {
+        display: none;
+        height: 100%;
+
+        &.active {
+            display: block;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
     }
 
     &__slide {
@@ -20,7 +101,35 @@
         &:hover {
             border: 1px solid rgb(226, 226, 226);
         }
+    }
 
+    &__progress {
+        position: absolute;
+        display: flex;
+        top: 20px;
+        width: 100%;
+        height: 4px;
+        padding: 0 6px;
+        background-color: rgba(20, 20, 20, 0.6);
+
+        &-item {
+            cursor: pointer;
+            position: relative;
+            height: 12px;
+            flex: 1;
+            padding: 0 4px;
+            border-left: 2px solid rgba(128, 128, 128, 0);
+            border-right: 2px solid rgba(128, 128, 128, 0);
+        }
+
+        &-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #fff;
+        }
     }
 
     &__preview {
@@ -50,4 +159,36 @@
         }
     }
 
+    &__btn-close {
+        cursor: pointer;
+        position: fixed;
+        z-index: 1001;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        transition: $transition;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.582);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 50% 50%;
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"%3E%3Cpath d="M3.21898 2.15408L9.99698 8.92708L16.703 2.22208C17.16 1.81508 17.633 2.05808 17.822 2.26208C17.9432 2.40981 18.0057 2.59704 17.9976 2.78798C17.9895 2.97892 17.9113 3.16017 17.778 3.29708L11.071 10.0011L17.778 16.7031C18.076 16.9531 18.076 17.4431 17.837 17.7171C17.597 17.9901 17.157 18.1481 16.742 17.8241L9.99698 11.0751L3.24398 17.8271C2.94798 18.0921 2.45998 18.0381 2.21898 17.7751C1.97698 17.5111 1.88498 17.0551 2.19398 16.7331L8.92298 10.0011L2.22198 3.29708C1.97698 3.02708 1.89198 2.53308 2.22198 2.22208C2.55198 1.91108 3.04398 1.95408 3.21898 2.15408Z" fill="black"/%3E%3C/svg%3E');
+        display: none;
+
+        @media(max-width: 768px) {
+            top: 14px;
+        }
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+    }
+}
+
+
+body {
+    &.overflow {
+        overflow: hidden;
+    }
 }
