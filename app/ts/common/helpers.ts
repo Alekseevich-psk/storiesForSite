@@ -9,3 +9,10 @@ export function onBtnArrow(btn: Element) {
 export function getWidthElem(elem: Element) {
     return elem.clientWidth;
 }
+
+export function animFade(elem: Element) {
+    elem.classList.add('fade');
+    setTimeout(() => {
+        elem.classList.remove('fade');
+    }, 400);
+}

@@ -8,12 +8,26 @@ export default function initFullScreen(wrapper: Element, elements: NodeListOf<El
     btnClose.addEventListener('click', () => {
         wrapper.classList.remove('fullscreen');
         body.classList.remove('overflow');
+
+        wrapper.dispatchEvent(new CustomEvent("changeFullScreenMode", {
+            detail: {
+                'fullScreen': false,
+                'activeIndex': 0
+            },
+        }));
     })
 
-    elements.forEach((element) => {
+    elements.forEach((element, index) => {
         element.addEventListener('click', () => {
             wrapper.classList.add('fullscreen');
             body.classList.add('overflow');
+
+            wrapper.dispatchEvent(new CustomEvent("changeFullScreenMode", {
+                detail: {
+                    'fullScreen': true,
+                    'activeIndex': index
+                },
+            }));
         })
     });
 }

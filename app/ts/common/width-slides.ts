@@ -9,10 +9,15 @@ type objectParentWidth = {
     wrapper: Number,
 }
 
-export default function widthSlides(wrapper: Element, slides: NodeList, options: Options) {
+export default function widthSlides(wrapper: Element, slides: NodeList, options: Options, fullScreen = false) {
     let optionWidth: object = options.slidesPerView;
     let parentWidth: objectParentWidth = getWidthParentElements(wrapper);
     let widthSlide: number;
+
+    if (fullScreen) {
+        setWidthItems(0);
+        return Number(parentWidth.window);
+    }
 
     if (optionWidth == null) {
         optionWidth = {
@@ -43,7 +48,7 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
     function setWidthItems(count: number) {
         slides.forEach(element => {
             let elem = element as HTMLElement;
-            widthSlide = Number(parentWidth.wrapper) / getCountSlides();
+            widthSlide = (count === 0) ? Number(parentWidth.wrapper) : Number(parentWidth.wrapper) / count;
             elem.style.flexBasis = widthSlide + 'px';
         });
     }
