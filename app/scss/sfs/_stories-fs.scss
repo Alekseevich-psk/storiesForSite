@@ -110,6 +110,7 @@
         padding: 10px;
         border: 1px solid transparent;
         border-radius: 50%;
+        // will-change: transform;
 
         &:hover {
             border: 1px solid rgb(226, 226, 226);
@@ -133,15 +134,33 @@
             padding: 0 4px;
             border-left: 2px solid rgba(128, 128, 128, 0);
             border-right: 2px solid rgba(128, 128, 128, 0);
+
+            &.active {
+                // .stories-fs__progress-bg {
+                    // width: 100%;
+                    // animation: progressBG 2s linear;
+                // }
+            }
         }
 
         &-bg {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 0;
             height: 4px;
+            border-radius: 1px;
             background-color: #fff;
+        }
+    }
+
+    @keyframes progressBG {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 100%;
         }
     }
 
