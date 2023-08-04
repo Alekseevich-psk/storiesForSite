@@ -17,4 +17,6 @@ export default function initProgress(elements: NodeListOf<Element>) {
         }
     });
 
+    return true;
+
 }

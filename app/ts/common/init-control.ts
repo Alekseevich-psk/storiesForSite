@@ -34,7 +34,7 @@ export default function initControl(wrapper: Element, options: Options) {
     let elemPrevDef = wrapper.querySelector('.stories-fs__arrow--prev');
     let elemNextDef = wrapper.querySelector('.stories-fs__arrow--next');
 
-    elemPrevDef.classList.add('disabled');
+    // elemPrevDef.classList.add('disabled');
 
     if (elemPrevDef) {
         arrows.defBtnPrev = elemPrevDef;
