@@ -113,7 +113,6 @@ class storiesFs {
         if (!this.fullScreenMode && !flagAnim) end = (this.widthSlide * activeIndex) - hideLengthTrack;
 
         (this.activeIndex <= 0 || this.activeIndex < this.countActiveSlide) ? offBtnArrow(this.arrowsBtnEl.defBtnPrev) : onBtnArrow(this.arrowsBtnEl.defBtnPrev);
-        console.log('end - ' + end);
 
         if (end < 0) end = 0;
         if (end > hideLengthTrack) return;
@@ -128,7 +127,6 @@ class storiesFs {
                 (direction == 'next') ? start = start + period : start = start - period;
 
                 if (direction === 'next' && start >= end || direction === 'prev' && start <= end) {
-                    // animProgress(this.slidesStoriesFs, activeIndex);
                     this.trackStoriesFs.style.transform = `translate(${(-1 * end) + 'px'}, 0)`;
                     clearInterval(this.timerId);
                     this.playAnimScroll = false;
@@ -140,7 +138,6 @@ class storiesFs {
         }
 
         animProgress(this.slidesStoriesFs, activeIndex);
-
         (end === hideLengthTrack) ? offBtnArrow(this.arrowsBtnEl.defBtnNext) : onBtnArrow(this.arrowsBtnEl.defBtnNext);
     }
 
