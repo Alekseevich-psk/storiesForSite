@@ -50,32 +50,24 @@ class storiesFs {
 
         this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         this.arrowsBtnEl = initControl(this.wrapperStoriesFs, options);
+        this.countActiveSlide = this.getCountSlidesInWrapWindow();
 
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
         initProgress(this.slidesStoriesFs);
-        this.getCountSlidesInWrapWindow();
+
         offBtnArrow(this.arrowsBtnEl.defBtnPrev);
+        if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrow(this.arrowsBtnEl.defBtnNext);
 
         this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {
-
-            if ((event.detail.btn === 'prev') && !this.playAnimScroll) {
-                this.activeIndex--;
-                this.prevSlide(this.activeIndex);
-            }
-
-            if ((event.detail.btn === 'next') && !this.playAnimScroll) {
-                this.activeIndex++;
-                this.nextSlide(this.activeIndex);
-            }
-
+            if ((event.detail.btn === 'prev') && !this.playAnimScroll) this.activeIndex--, this.prevSlide(this.activeIndex);
+            if ((event.detail.btn === 'next') && !this.playAnimScroll) this.activeIndex++, this.nextSlide(this.activeIndex);
         })
 
         this.wrapperStoriesFs.addEventListener('changeFullScreenMode', (event: CustomEvent) => {
             if (event.detail.activeIndex) this.activeIndex = event.detail.activeIndex;
-            // animProgress(this.slidesStoriesFs, this.activeIndex);
 
             this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options, event.detail.fullScreen);
-            this.getCountSlidesInWrapWindow();
+            this.countActiveSlide = this.getCountSlidesInWrapWindow();
 
             this.fullScreenMode = event.detail.fullScreen;
             this.scrollTrack(this.widthSlide, false, this.activeIndex);
@@ -92,30 +84,34 @@ class storiesFs {
     }
 
     private scrollTrack(distance: number, flagAnim: boolean, activeIndex: number,) {
-        console.log(activeIndex);
-
-        if (this.playAnimScroll) return;
-        if (activeIndex < 0) return this.activeIndex = 0;
+        if (this.playAnimScroll || this.slidesStoriesFs.length < this.countActiveSlide) return;
         if (activeIndex > this.slidesStoriesFs.length - 1) return this.activeIndex = this.slidesStoriesFs.length - 1;
+        if (activeIndex < 0) return this.activeIndex = 0;
 
         let speedTimer: number = 1;
-        let speedScroll: number = 40; // low value = high speed scroll
-
+        let speedScroll: number = 32; // low value = high speed scroll
         let start: number = this.countScrollWrapper;
         let end: number = start + distance;
-
         let direction: string = (start < end) ? 'next' : 'prev';
-
         let period: number = (start < end) ? Math.ceil((end - start) / speedScroll) : Math.ceil((start - end) / speedScroll);
         let hideLengthTrack: number = (this.slidesStoriesFs.length - this.countActiveSlide) * this.widthSlide;
 
         if (this.fullScreenMode && !flagAnim) end = this.widthSlide * activeIndex;
         if (!this.fullScreenMode && !flagAnim) end = (this.widthSlide * activeIndex) - hideLengthTrack;
 
-        (this.activeIndex <= 0 || this.activeIndex < this.countActiveSlide) ? offBtnArrow(this.arrowsBtnEl.defBtnPrev) : onBtnArrow(this.arrowsBtnEl.defBtnPrev);
+        if (end <= 0) {
+            offBtnArrow(this.arrowsBtnEl.defBtnPrev);
+            end = 0;
+        } else {
+            onBtnArrow(this.arrowsBtnEl.defBtnPrev);
+        }
 
-        if (end < 0) end = 0;
-        if (end > hideLengthTrack) return;
+        if (end >= hideLengthTrack) {
+            offBtnArrow(this.arrowsBtnEl.defBtnNext);
+            end = hideLengthTrack;
+        } else {
+            onBtnArrow(this.arrowsBtnEl.defBtnNext);
+        }
 
         this.countScrollWrapper = end;
 
@@ -138,11 +134,10 @@ class storiesFs {
         }
 
         animProgress(this.slidesStoriesFs, activeIndex);
-        (end === hideLengthTrack) ? offBtnArrow(this.arrowsBtnEl.defBtnNext) : onBtnArrow(this.arrowsBtnEl.defBtnNext);
     }
 
     private getCountSlidesInWrapWindow() {
-        return this.countActiveSlide = getWidthElem(this.wrapperStoriesFs) / this.widthSlide;
+        return getWidthElem(this.wrapperStoriesFs) / this.widthSlide;
     }
 
 }
