@@ -136,10 +136,9 @@
             border-right: 2px solid rgba(128, 128, 128, 0);
 
             &.active {
-                // .stories-fs__progress-bg {
-                    // width: 100%;
-                    // animation: progressBG 2s linear;
-                // }
+                .stories-fs__progress-bg {
+                    animation-play-state: running;
+                }
             }
         }
 
@@ -151,6 +150,10 @@
             height: 4px;
             border-radius: 1px;
             background-color: #fff;
+            animation: progressBG 2s linear;
+            animation-fill-mode: both;
+            animation-play-state: paused;
+            
         }
     }
 

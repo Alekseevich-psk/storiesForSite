@@ -1,39 +1,37 @@
 export default function animProgress(elements: NodeListOf<Element>, activeIndex: number) {
 
     const elem = elements[activeIndex];
-    const progressItemsBG = elem.querySelectorAll('.stories-fs__progress-bg');
+    let indexItem: number = 0;
+
+    const progressItems = elem.querySelectorAll('.stories-fs__progress-item');
     const pictureItems = elem.querySelectorAll('.stories-fs__inner');
 
-    if (progressItemsBG.length <= 0 || pictureItems.length <= 0) return;
+    if (progressItems.length <= 0 || pictureItems.length <= 0) return;
 
-    autoPlay(progressItemsBG, true);
-    autoPlay(pictureItems, false);
+    removeActiveClass(progressItems);
+    removeActiveClass(pictureItems);
 
-    function autoPlay(elements: NodeListOf<Element>, bgAnim: boolean) {
-        removeActiveClass(elements);
+    progressItems[indexItem].classList.add('active');
+    pictureItems[indexItem].classList.add('active');
 
-        let activeIndex: number = 0;
+    let timerId = setInterval(() => {
+        playAnim();
+        if (indexItem === progressItems.length - 1) clearInterval(timerId);
+    }, 2000);
 
-        elements[activeIndex].classList.add('active');
-        if (bgAnim) animationBg(elements[activeIndex]);
+    progressItems.forEach((element, index) => {
+        element.addEventListener('click', () => {
+            playAnim(index);
+            clearInterval(timerId);
+        })
+    });
 
-        let timer = setInterval(() => {
-            elements[activeIndex].classList.remove('active');
-            activeIndex++;
-            if (bgAnim) animationBg(elements[activeIndex]);
-            elements[activeIndex].classList.add('active');
-            if (activeIndex == elements.length - 1) clearInterval(timer);
-        }, 2000);
-    }
-
-    function animationBg(elem: Element) {
-        let progressBgItem = elem as HTMLElement;
-        let period: number = 10;
-        let timer = setInterval(() => {
-            progressBgItem.style.width = period + '%';
-            period++;
-            if (period == 100) clearInterval(timer);
-        }, 20);
+    function playAnim(index: number | null = null) {
+        progressItems[indexItem].classList.remove('active');
+        pictureItems[indexItem].classList.remove('active');
+        (index === null) ? indexItem++ : indexItem = index;
+        progressItems[indexItem].classList.add('active');
+        pictureItems[indexItem].classList.add('active');
     }
 
     function removeActiveClass(elements: NodeListOf<Element>) {

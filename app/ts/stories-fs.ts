@@ -133,7 +133,8 @@ class storiesFs {
             this.trackStoriesFs.style.transform = `translate(${(-1 * end) + 'px'}, 0)`;
         }
 
-        animProgress(this.slidesStoriesFs, activeIndex);
+        if (this.fullScreenMode) animProgress(this.slidesStoriesFs, activeIndex);
+
     }
 
     private getCountSlidesInWrapWindow() {
