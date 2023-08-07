@@ -4,6 +4,8 @@ export default function animProgress(elements: NodeListOf<Element>, activeIndex:
     const progressItemsBG = elem.querySelectorAll('.stories-fs__progress-bg');
     const pictureItems = elem.querySelectorAll('.stories-fs__inner');
 
+    if (progressItemsBG.length <= 0 || pictureItems.length <= 0) return;
+
     autoPlay(progressItemsBG, true);
     autoPlay(pictureItems, false);
 

@@ -54,6 +54,7 @@ class storiesFs {
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
         initProgress(this.slidesStoriesFs);
         this.getCountSlidesInWrapWindow();
+        offBtnArrow(this.arrowsBtnEl.defBtnPrev);
 
         this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {
 
@@ -70,14 +71,14 @@ class storiesFs {
         })
 
         this.wrapperStoriesFs.addEventListener('changeFullScreenMode', (event: CustomEvent) => {
+            if (event.detail.activeIndex) this.activeIndex = event.detail.activeIndex;
+            // animProgress(this.slidesStoriesFs, this.activeIndex);
+
             this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options, event.detail.fullScreen);
             this.getCountSlidesInWrapWindow();
 
             this.fullScreenMode = event.detail.fullScreen;
-            if (event.detail.activeIndex) this.activeIndex = event.detail.activeIndex;
-
             this.scrollTrack(this.widthSlide, false, this.activeIndex);
-            animProgress(this.slidesStoriesFs, this.activeIndex);
         })
 
     }
@@ -87,64 +88,60 @@ class storiesFs {
     }
 
     private nextSlide(activeIndex: number) {
-        console.log('test');
-        
         this.scrollTrack(this.widthSlide, true, activeIndex);
     }
 
     private scrollTrack(distance: number, flagAnim: boolean, activeIndex: number,) {
-        
-        let speed = 1;
-        let start = this.countScrollWrapper;
-        let end = this.countScrollWrapper + distance;
-        let locTimer: any;
-        
-        console.log(this.timerId);
-        
-        if (!this.fullScreenMode && !flagAnim) {
-            start = this.widthSlide * activeIndex;
-            end = this.widthSlide * activeIndex;
-            this.countScrollWrapper = end - distance;
-            
-            this.trackStoriesFs.style.transform = `translate(${(-1 * end) + 'px'}, 0)`;
-        }
-        
-        if (this.playAnimScroll) return;
+        console.log(activeIndex);
 
-        if (!flagAnim) {
-            start = this.widthSlide * activeIndex;
-            end = this.widthSlide * activeIndex;
-            this.countScrollWrapper = end - distance;
-        }
-        
-        
-        // console.log(activeIndex, start, end, (this.getLengthTrack() - this.countActiveSlide * this.widthSlide), this.countActiveSlide);
-        
-        if (end < 0) return this.countScrollWrapper = 0;
-        if (end > (this.getLengthTrack() - this.countActiveSlide * this.widthSlide)) return;
-        this.countScrollWrapper += distance;
-        
+        if (this.playAnimScroll) return;
+        if (activeIndex < 0) return this.activeIndex = 0;
+        if (activeIndex > this.slidesStoriesFs.length - 1) return this.activeIndex = this.slidesStoriesFs.length - 1;
+
+        let speedTimer: number = 1;
+        let speedScroll: number = 40; // low value = high speed scroll
+
+        let start: number = this.countScrollWrapper;
+        let end: number = start + distance;
+
+        let direction: string = (start < end) ? 'next' : 'prev';
+
+        let period: number = (start < end) ? Math.ceil((end - start) / speedScroll) : Math.ceil((start - end) / speedScroll);
+        let hideLengthTrack: number = (this.slidesStoriesFs.length - this.countActiveSlide) * this.widthSlide;
+
+        if (this.fullScreenMode && !flagAnim) end = this.widthSlide * activeIndex;
+        if (!this.fullScreenMode && !flagAnim) end = (this.widthSlide * activeIndex) - hideLengthTrack;
+
+        (this.activeIndex <= 0 || this.activeIndex < this.countActiveSlide) ? offBtnArrow(this.arrowsBtnEl.defBtnPrev) : onBtnArrow(this.arrowsBtnEl.defBtnPrev);
+        console.log('end - ' + end);
+
+        if (end < 0) end = 0;
+        if (end > hideLengthTrack) return;
+
+        this.countScrollWrapper = end;
+
         if (flagAnim ?? this.fullScreenMode) {
             this.playAnimScroll = true;
             this.timerId = setInterval(() => {
+
                 this.trackStoriesFs.style.transform = `translate(${(-1 * start) + 'px'}, 0)`;
-                (start <= end) ? start++ : start--;
-                
-                if (start == end) {
+                (direction == 'next') ? start = start + period : start = start - period;
+
+                if (direction === 'next' && start >= end || direction === 'prev' && start <= end) {
+                    // animProgress(this.slidesStoriesFs, activeIndex);
+                    this.trackStoriesFs.style.transform = `translate(${(-1 * end) + 'px'}, 0)`;
                     clearInterval(this.timerId);
                     this.playAnimScroll = false;
-                    animProgress(this.slidesStoriesFs, activeIndex);
                 }
-                
-            }, speed);
+
+            }, speedTimer);
         } else {
             this.trackStoriesFs.style.transform = `translate(${(-1 * end) + 'px'}, 0)`;
         }
-        console.log(this.timerId);
-    }
-    
-    private getLengthTrack() {
-        return this.slidesStoriesFs.length * this.widthSlide;
+
+        animProgress(this.slidesStoriesFs, activeIndex);
+
+        (end === hideLengthTrack) ? offBtnArrow(this.arrowsBtnEl.defBtnNext) : onBtnArrow(this.arrowsBtnEl.defBtnNext);
     }
 
     private getCountSlidesInWrapWindow() {
