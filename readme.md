@@ -65,6 +65,7 @@ new storiesFs(".stories-fs", {
 
 ---
 
-| Name              |  type  | Default | Value | Description                                       |
-| :---------------- | :----: | :-----: | :---: | :------------------------------------------------ |
-| **slidesPerView** | object |    -    |   -   | The number of slides at a given screen resolution |
+| Name                   |  type   | Default |       Value       | Description                                            |
+| :--------------------- | :-----: | :-----: | :---------------: | :----------------------------------------------------- |
+| **slidesPerView**      | object  |    -    |         -         | The number of slides at a given screen resolution      |
+| **swipeOnSlide** | boolean |  true   | false &#124; true | Add the ability to switch slides by swipe on the slide |
