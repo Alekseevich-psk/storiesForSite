@@ -61,7 +61,11 @@ class storiesFs {
         this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {
             if ((event.detail.btn === 'prev') && !this.playAnimScroll) this.activeIndex--, this.prevSlide(this.activeIndex);
             if ((event.detail.btn === 'next') && !this.playAnimScroll) this.activeIndex++, this.nextSlide(this.activeIndex);
-        })
+        });
+
+        this.wrapperStoriesFs.addEventListener('animSlide', (event: CustomEvent) => {
+            this.activeIndex++, this.nextSlide(this.activeIndex);
+        });
 
         this.wrapperStoriesFs.addEventListener('changeFullScreenMode', (event: CustomEvent) => {
             if (event.detail.activeIndex) this.activeIndex = event.detail.activeIndex;
@@ -71,7 +75,7 @@ class storiesFs {
 
             this.fullScreenMode = event.detail.fullScreen;
             this.scrollTrack(this.widthSlide, false, this.activeIndex);
-        })
+        });
 
     }
 
@@ -84,7 +88,8 @@ class storiesFs {
     }
 
     private scrollTrack(distance: number, flagAnim: boolean, activeIndex: number,) {
-        if (this.playAnimScroll || this.slidesStoriesFs.length < this.countActiveSlide) return;
+
+        if (this.playAnimScroll) return;
         if (activeIndex > this.slidesStoriesFs.length - 1) return this.activeIndex = this.slidesStoriesFs.length - 1;
         if (activeIndex < 0) return this.activeIndex = 0;
 
@@ -98,7 +103,9 @@ class storiesFs {
 
         if (this.fullScreenMode && !flagAnim) end = this.widthSlide * activeIndex;
         if (!this.fullScreenMode && !flagAnim) end = (this.widthSlide * activeIndex) - hideLengthTrack;
-
+        
+        console.log(end, hideLengthTrack);
+        
         if (end <= 0) {
             offBtnArrow(this.arrowsBtnEl.defBtnPrev);
             end = 0;
@@ -106,11 +113,17 @@ class storiesFs {
             onBtnArrow(this.arrowsBtnEl.defBtnPrev);
         }
 
-        if (end >= hideLengthTrack) {
+        if (hideLengthTrack <= 0) {
             offBtnArrow(this.arrowsBtnEl.defBtnNext);
-            end = hideLengthTrack;
+            offBtnArrow(this.arrowsBtnEl.defBtnPrev);
+            end = 0;
         } else {
             onBtnArrow(this.arrowsBtnEl.defBtnNext);
+        }
+
+        if (end >= hideLengthTrack && hideLengthTrack > 0) {
+            offBtnArrow(this.arrowsBtnEl.defBtnNext);
+            end = hideLengthTrack;
         }
 
         this.countScrollWrapper = end;
@@ -133,7 +146,7 @@ class storiesFs {
             this.trackStoriesFs.style.transform = `translate(${(-1 * end) + 'px'}, 0)`;
         }
 
-        if (this.fullScreenMode) animProgress(this.slidesStoriesFs, activeIndex);
+        if (this.fullScreenMode) animProgress(this.wrapperStoriesFs, this.slidesStoriesFs, activeIndex);
 
     }
 

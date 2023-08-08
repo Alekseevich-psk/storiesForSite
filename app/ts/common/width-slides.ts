@@ -24,13 +24,12 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
             320: {
                 count: 4
             },
-
-            // 960: {
-            //     count: 8
-            // },
-            // 1280: {
-            //     count: 4
-            // }
+            960: {
+                count: 6
+            },
+            1280: {
+                count: 8
+            }
         }
     }
 

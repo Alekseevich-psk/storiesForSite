@@ -17,6 +17,7 @@
 
     &.fullscreen {
         position: fixed;
+        z-index: 1000;
         padding: 0;
         top: 0;
         left: 0;
@@ -72,7 +73,8 @@
 
     &__wrapper {
         position: relative;
-        max-width: 480px;
+        max-width: 520px;
+        max-height: 1000px;
         z-index: 1000;
         top: 0;
         left: 0;
@@ -86,11 +88,19 @@
     }
 
     &__inner {
-        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: 100%;
+        z-index: 1;
 
         &.active {
             display: block;
+
+            img {
+                opacity: 1;
+            }
         }
 
         img {
@@ -98,6 +108,8 @@
             height: 100%;
             object-fit: cover;
             border-radius: 4px;
+            opacity: 0;
+            transition: 0.2s;
         }
     }
 
@@ -106,6 +118,7 @@
         flex-grow: 0;
         flex-shrink: 0;
         height: auto;
+        align-items: center;
         // transition: $transition;
         padding: 10px;
         border: 1px solid transparent;
@@ -120,6 +133,7 @@
     &__progress {
         position: absolute;
         display: flex;
+        z-index: 2;
         top: 20px;
         width: 100%;
         height: 4px;
@@ -135,10 +149,14 @@
             border-left: 2px solid rgba(128, 128, 128, 0);
             border-right: 2px solid rgba(128, 128, 128, 0);
 
-            &.active {
-                .stories-fs__progress-bg {
-                    animation-play-state: running;
-                }
+            &:before {
+                position: absolute;
+                content: "";
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background-color: rgba(184, 184, 184, 0.26);
             }
         }
 
@@ -150,10 +168,7 @@
             height: 4px;
             border-radius: 1px;
             background-color: #fff;
-            animation: progressBG 2s linear;
-            animation-fill-mode: both;
-            animation-play-state: paused;
-            
+            transition: 0.2s;
         }
     }
 
