@@ -24,10 +24,10 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
-  "name": "pm-gallery",
-  "description": "pm-Gallery - being developed as a test project within the framework of learning JavaScript",
-  "version": "1.0.2",
-  "main": "pm-gallery.js",
+  "name": "stories-fs",
+  "description": "stories-fs - just stories for the site",
+  "version": "1.0.0",
+  "main": "stories-fs.js",
   "dependencies": {
     "accepts": "^1.3.8",
     "acorn": "^8.10.0",

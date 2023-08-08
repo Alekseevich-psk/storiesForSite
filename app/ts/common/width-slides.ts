@@ -13,12 +13,12 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
     let optionWidth: object = options.slidesPerView;
     let parentWidth: objectParentWidth = getWidthParentElements(wrapper);
     let widthSlide: number;
-
+    
     if (fullScreen) {
         setWidthItems(0);
         return Number(parentWidth.window);
     }
-
+    
     if (optionWidth == null) {
         optionWidth = {
             320: {
@@ -32,7 +32,7 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
             }
         }
     }
-
+    
     init();
 
     window.addEventListener('resize', () => {

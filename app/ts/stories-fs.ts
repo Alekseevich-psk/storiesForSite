@@ -104,8 +104,6 @@ class storiesFs {
         if (this.fullScreenMode && !flagAnim) end = this.widthSlide * activeIndex;
         if (!this.fullScreenMode && !flagAnim) end = (this.widthSlide * activeIndex) - hideLengthTrack;
         
-        console.log(end, hideLengthTrack);
-        
         if (end <= 0) {
             offBtnArrow(this.arrowsBtnEl.defBtnPrev);
             end = 0;
