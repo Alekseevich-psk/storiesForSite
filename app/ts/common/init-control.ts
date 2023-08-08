@@ -30,7 +30,7 @@ export default function initControl(wrapper: Element, options: Options) {
 
         arrowsWrapper.classList.add('hide-arrows');
     }
-
+    
     let elemPrevDef = wrapper.querySelector('.stories-fs__arrow--prev');
     let elemNextDef = wrapper.querySelector('.stories-fs__arrow--next');
 

@@ -10,7 +10,6 @@ import swipe from './common/swipe';
 import { Options } from './types/options';
 import { Arrows } from './types/arrows';
 
-
 class storiesFs {
 
     private trackStoriesFsEl = '.stories-fs__track';

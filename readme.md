@@ -65,7 +65,8 @@ new storiesFs(".stories-fs", {
 
 ---
 
-| Name                   |  type   | Default |       Value       | Description                                            |
-| :--------------------- | :-----: | :-----: | :---------------: | :----------------------------------------------------- |
-| **slidesPerView**      | object  |    -    |         -         | The number of slides at a given screen resolution      |
-| **swipeOnSlide** | boolean |  true   | false &#124; true | Add the ability to switch slides by swipe on the slide |
+| Name              |  type   | Default |           Value            | Description                                            |
+| :---------------- | :-----: | :-----: | :------------------------: | :----------------------------------------------------- |
+| **slidesPerView** | object  |    -    |             -              | The number of slides at a given screen resolution      |
+| **navigation**    | object  |  false  | elBtnPrev &#124; elBtnNext | Replacement of default slider control buttons          |
+| **swipeOnSlide**  | boolean |  true   | true &#124; false | Add the ability to switch slides by swipe on the slide |
