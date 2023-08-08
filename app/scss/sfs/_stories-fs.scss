@@ -234,6 +234,11 @@
             background-color: rgba(255, 255, 255, 1);
         }
     }
+
+    img {
+        user-select: none;
+        pointer-events: none;
+    }
 }
 
 body {

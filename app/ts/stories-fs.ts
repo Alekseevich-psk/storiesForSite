@@ -5,6 +5,7 @@ import initControl from './common/init-control';
 import initFullScreen from './common/init-fullscreen';
 import initProgress from './common/init-progress';
 import animProgress from './common/anim-progress';
+import swipe from './common/swipe';
 
 import { Options } from './types/options';
 import { Arrows } from './types/arrows';
@@ -54,6 +55,7 @@ class storiesFs {
 
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
         initProgress(this.slidesStoriesFs);
+        swipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
 
         offBtnArrow(this.arrowsBtnEl.defBtnPrev);
         if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrow(this.arrowsBtnEl.defBtnNext);
@@ -103,7 +105,7 @@ class storiesFs {
 
         if (this.fullScreenMode && !flagAnim) end = this.widthSlide * activeIndex;
         if (!this.fullScreenMode && !flagAnim) end = (this.widthSlide * activeIndex) - hideLengthTrack;
-        
+
         if (end <= 0) {
             offBtnArrow(this.arrowsBtnEl.defBtnPrev);
             end = 0;
