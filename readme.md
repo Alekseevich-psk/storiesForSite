@@ -34,24 +34,26 @@ new storiesFs(".stories-fs", {
 });
 ```
 
-## Example:
+## Example HTML:
 
 ```html
 <div class="stories-fs">
-    <div class="stories-fs__track">
-        <div class="stories-fs__slide">
-            <div class="stories-fs__preview">
-                <img src="./images/1.jpg" alt="" />
-            </div>
-            <div class="stories-fs__wrapper">
-                <div class="stories-fs__inner">
+    <div class="stories-fs__wrapper">
+        <div class="stories-fs__track">
+            <div class="stories-fs__slide">
+                <div class="stories-fs__preview">
                     <img src="./images/1.jpg" alt="" />
                 </div>
-                <div class="stories-fs__inner">
-                    <img src="./images/2.jpg" alt="" />
-                </div>
-                <div class="stories-fs__inner">
-                    <img src="./images/3.jpg" alt="" />
+                <div class="stories-fs__slide-wrapper">
+                    <div class="stories-fs__inner">
+                        <img src="./images/1.jpg" alt="" />
+                    </div>
+                    <div class="stories-fs__inner">
+                        <img src="./images/2.jpg" alt="" />
+                    </div>
+                    <div class="stories-fs__inner">
+                        <img src="./images/3.jpg" alt="" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,4 +71,4 @@ new storiesFs(".stories-fs", {
 | :---------------- | :-----: | :-----: | :------------------------: | :----------------------------------------------------- |
 | **slidesPerView** | object  |    -    |             -              | The number of slides at a given screen resolution      |
 | **navigation**    | object  |  false  | elBtnPrev &#124; elBtnNext | Replacement of default slider control buttons          |
-| **swipeOnSlide**  | boolean |  true   | true &#124; false | Add the ability to switch slides by swipe on the slide |
+| **swipeOnSlide**  | boolean |  true   |     true &#124; false      | Add the ability to switch slides by swipe on the slide |
