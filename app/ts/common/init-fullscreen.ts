@@ -6,26 +6,13 @@ export default function initFullScreen(wrapper: Element, elements: NodeListOf<El
 
     const btnClose = wrapper.querySelector('.stories-fs__btn-close');
     const body = document.querySelector('body');
-
-    btnClose.addEventListener('click', () => {
-        wrapper.classList.remove('fullscreen');
-        body.classList.remove('overflow');
-
-        wrapper.dispatchEvent(new CustomEvent("changeFullScreenMode", {
-            detail: {
-                'fullScreen': false,
-            },
-        }));
-
-        fullScreenMode = false;
-    })
-
+    
     elements.forEach((element, index) => {
         element.addEventListener('click', () => {
 
             wrapper.classList.add('fullscreen');
             body.classList.add('overflow');
-
+            
             if (!fullScreenMode) {
                 wrapper.dispatchEvent(new CustomEvent("changeFullScreenMode", {
                     detail: {
@@ -33,10 +20,28 @@ export default function initFullScreen(wrapper: Element, elements: NodeListOf<El
                         'activeIndex': index
                     },
                 }));
-
+                
                 fullScreenMode = true;
             }
-
+            
         })
+    });
+    
+    const closeFullScreen = () => {
+        wrapper.classList.remove('fullscreen');
+        body.classList.remove('overflow');
+        
+        wrapper.dispatchEvent(new CustomEvent("changeFullScreenMode", {
+            detail: {
+                'fullScreen': false,
+            },
+        }));
+        
+        fullScreenMode = false;
+    };
+
+    btnClose.addEventListener('click', closeFullScreen);
+    window.addEventListener("keydown", (event) => {
+        if (event.key === 'Escape') closeFullScreen();
     });
 }

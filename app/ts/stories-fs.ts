@@ -1,10 +1,11 @@
 import { onBtnArrow, offBtnArrow, getWidthElem, animFade } from './common/helpers';
 
-import widthSlides from './common/width-slides';
 import initControl from './common/init-control';
 import initFullScreen from './common/init-fullscreen';
 import initProgress from './common/init-progress';
+
 import animProgress from './common/anim-progress';
+import widthSlides from './common/width-slides';
 import swipe from './common/swipe';
 
 import { Options } from './types/options';
@@ -26,9 +27,7 @@ class storiesFs {
     private wrapperStoriesFs: Element;
     private trackStoriesFs: HTMLElement;
     private slidesStoriesFs: NodeListOf<Element>;
-
     private animFlagChangeSlide: any = null;
-
     private arrowsBtnEl: Arrows;
 
     constructor(wrapper: string, options: Options) {
