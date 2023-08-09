@@ -1,6 +1,6 @@
 export default function initProgress(elements: NodeListOf<Element>) {
     elements.forEach(element => {
-        const elementWrapper = element.querySelector('.stories-fs__slide-wrapper');
+        const elementWrapper = element.querySelector('.stories-fs__sub-wrapper');
         const elementInner = element.querySelectorAll('.stories-fs__inner') as NodeListOf<Element>;
 
         const progressWrapperHTML = `<div class="stories-fs__progress"></div>`;

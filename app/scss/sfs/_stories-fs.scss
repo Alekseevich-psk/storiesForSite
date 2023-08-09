@@ -37,7 +37,7 @@
                     display: block;
                 }
 
-                &__slide-wrapper {
+                &__sub-wrapper {
                     display: block;
                 }
 
@@ -83,7 +83,7 @@
         transform: translate3d(0, 0, 0);
     }
 
-    &__slide-wrapper {
+    &__sub-wrapper {
         position: relative;
         max-width: 520px;
         max-height: 1000px;

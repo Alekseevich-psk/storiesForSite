@@ -44,7 +44,7 @@ new storiesFs(".stories-fs", {
                 <div class="stories-fs__preview">
                     <img src="./images/1.jpg" alt="" />
                 </div>
-                <div class="stories-fs__slide-wrapper">
+                <div class="stories-fs__sub-wrapper">
                     <div class="stories-fs__inner">
                         <img src="./images/1.jpg" alt="" />
                     </div>
