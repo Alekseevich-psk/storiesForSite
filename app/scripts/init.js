@@ -11,7 +11,7 @@ new storiesFs(".main__stories-fs", {
             count: 6
         },
         1280: {
-            count: 8
+            count: 6
         }
     }
 });

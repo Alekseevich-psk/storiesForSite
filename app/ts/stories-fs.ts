@@ -3,10 +3,10 @@ import { offBtnArrowPrev, offBtnArrowNext, onBtnArrowPrev, onBtnArrowNext, getWi
 import initControl from './common/init-control';
 import initFullScreen from './common/init-fullscreen';
 import initProgress from './common/init-progress';
+import initSwipe from './common/init-swipe';
 
 import animProgress from './common/anim-progress';
 import widthSlides from './common/width-slides';
-import swipe from './common/swipe';
 import initHeightParent from './common/height-parent';
 
 import { Options } from './types/options';
@@ -59,7 +59,7 @@ class storiesFs {
 
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
         initProgress(this.slidesStoriesFs);
-        swipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
+        initSwipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         initHeightParent(this.parentStoriesFs);
 
         offBtnArrowPrev(this.arrowsBtnEl);
