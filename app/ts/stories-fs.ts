@@ -27,6 +27,8 @@ class storiesFs {
     private trackStoriesFs: HTMLElement;
     private slidesStoriesFs: NodeListOf<Element>;
 
+    private animFlagChangeSlide: any = null;
+
     private arrowsBtnEl: Arrows;
 
     constructor(wrapper: string, options: Options) {
@@ -64,13 +66,16 @@ class storiesFs {
             if ((event.detail.btn === 'next') && !this.playAnimScroll) this.activeIndex++, this.nextSlide(this.activeIndex);
         });
 
+        this.wrapperStoriesFs.addEventListener('changeItem', (event: CustomEvent) => {
+            this.animFlagChangeSlide = event.detail.animFlagChangeSlide;
+        });
+
         this.wrapperStoriesFs.addEventListener('animSlide', (event: CustomEvent) => {
-            this.activeIndex++, this.nextSlide(this.activeIndex);
+            if (event.detail.activeSlide === this.activeIndex && this.fullScreenMode) this.activeIndex++, this.nextSlide(this.activeIndex);
         });
 
         this.wrapperStoriesFs.addEventListener('changeFullScreenMode', (event: CustomEvent) => {
             if (event.detail.activeIndex) this.activeIndex = event.detail.activeIndex;
-
             this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options, event.detail.fullScreen);
             this.countActiveSlide = this.getCountSlidesInWrapWindow();
 
@@ -89,7 +94,6 @@ class storiesFs {
     }
 
     private scrollTrack(distance: number, flagAnim: boolean, activeIndex: number,) {
-
         if (this.playAnimScroll) return;
         if (activeIndex > this.slidesStoriesFs.length - 1) return this.activeIndex = this.slidesStoriesFs.length - 1;
         if (activeIndex < 0) return this.activeIndex = 0;
@@ -143,10 +147,22 @@ class storiesFs {
             }, speedTimer);
         } else {
             this.trackStoriesFs.style.transform = `translate(${(-1 * end) + 'px'}, 0)`;
+            this.updateAnimationSlide();
         }
 
-        if (this.fullScreenMode) animProgress(this.wrapperStoriesFs, this.slidesStoriesFs, activeIndex);
+        if (this.fullScreenMode) this.updateAnimationSlide(), this.animFlagChangeSlide = animProgress(this.wrapperStoriesFs, this.slidesStoriesFs, activeIndex);
 
+    }
+
+    private updateAnimationSlide() {
+        if (this.animFlagChangeSlide) {
+            for (let index = 0; index < this.animFlagChangeSlide.interval.length; index++) {
+                clearInterval(this.animFlagChangeSlide.interval[index]);
+            }
+            for (let index = 0; index < this.animFlagChangeSlide.timer.length; index++) {
+                clearTimeout(this.animFlagChangeSlide.timer[index]);
+            }
+        }
     }
 
     private getCountSlidesInWrapWindow() {

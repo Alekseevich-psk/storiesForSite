@@ -7,45 +7,33 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
     const speedChangeItems: number = 2000;
     const speedProgressItems: number = speedChangeItems / 15;
 
-
     if (progressItems.length <= 0 || pictureItems.length <= 0 || progressItems.length !== pictureItems.length) return;
 
     const countItems: number = progressItems.length - 1;
 
     let indexActiveItem: number = 0;
-    let timerId: any = 0;
-    let animTimerId: any = 0;
-    let nextSlideTimerId: any = 0;
-
-    wrapper.addEventListener('changeSlide', (event: CustomEvent) => {
-        if (activeSlideIndex < elements.length - 1) updateAnimProgress();
-    });
-
-    wrapper.addEventListener('changeFullScreenMode', (event: CustomEvent) => {
-        updateAnimProgress();
-    });
+    let timerId: any = null;
+    let animTimerId: any = null;
+    let nextSlideTimerId: any = null;
 
     updateAnimProgress();
     playAnimation();
 
     progressItems.forEach((item, index) => {
-        item.addEventListener('click', function () {
-            removeActiveClass(indexActiveItem)
+        item.addEventListener('click', () => {
+            updateAnimProgress(index);
             indexActiveItem = index;
-            clearInterval(timerId);
-            clearInterval(animTimerId);
-            clearTimeout(nextSlideTimerId)
             playAnimation();
+            createEventTouchItem();
         });
     });
 
-    function updateAnimProgress() {
+    function updateAnimProgress(index: number = 0) {
         clearInterval(timerId);
         clearInterval(animTimerId);
-        removeResAnimProgressBg(indexActiveItem);
-
-        removeActiveClass(countItems);
-        removeResAnimProgressBg(indexActiveItem);
+        clearTimeout(nextSlideTimerId);
+        removeResAnimProgressBg(index);
+        removeActiveClass(index);
     }
 
     function playAnimation() {
@@ -53,27 +41,25 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
         pictureItems[indexActiveItem].classList.add('active');
         animProgressBg(indexActiveItem);
 
-        timerId = setInterval(() => {
-            changeActiveItem(indexActiveItem);
-            if (indexActiveItem >= countItems) {
-                clearInterval(timerId);
-
-                nextSlideTimerId = setTimeout(() => {
-                    wrapper.dispatchEvent(new CustomEvent("animSlide", {
-                        detail: { animSlide: false }
-                    }));
-                }, speedChangeItems);
-            }
-        }, speedChangeItems);
+        if (indexActiveItem < countItems) {
+            timerId = setInterval(() => {
+                changeActiveItem();
+                if (indexActiveItem >= countItems) {
+                    clearInterval(timerId);
+                    nextSlideTimerId = setTimeout(createEventAnimSlide, speedChangeItems);
+                }
+            }, speedChangeItems);
+        }
     }
 
-    function changeActiveItem(index: number) {
-        progressItems[index].classList.remove('active');
-        pictureItems[index].classList.remove('active');
+    function changeActiveItem() {
+        progressItems[indexActiveItem].classList.remove('active');
+        pictureItems[indexActiveItem].classList.remove('active');
+
         indexActiveItem++;
         clearInterval(animTimerId);
+
         animProgressBg(indexActiveItem);
-        if (indexActiveItem >= countItems) indexActiveItem = countItems;
         progressItems[indexActiveItem].classList.add('active');
         pictureItems[indexActiveItem].classList.add('active');
     }
@@ -91,18 +77,28 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
     }
 
     function removeActiveClass(index: number) {
-        if (progressItems[index].classList.contains('active')) progressItems[countItems].classList.remove('active');
-        if (pictureItems[index].classList.contains('active')) pictureItems[countItems].classList.remove('active');
+        if (progressItems[index].classList.contains('active')) progressItems[index].classList.remove('active');
+        if (pictureItems[index].classList.contains('active')) pictureItems[index].classList.remove('active');
+        if (index < countItems) index++, removeActiveClass(index);
     }
 
     function removeResAnimProgressBg(index: number) {
         const bgItem = progressItemsBg[index] as HTMLElement;
         bgItem.style.width = 0 + '%';
-
-        if (index < countItems) {
-            index++;
-            removeResAnimProgressBg(index);
-        }
+        if (index < countItems) index++, removeResAnimProgressBg(index);
     }
 
+    const createEventAnimSlide = () => {
+        wrapper.dispatchEvent(new CustomEvent("animSlide", {
+            detail: { animSlide: false, activeSlide: activeSlideIndex }
+        }));
+    }
+
+    const createEventTouchItem = () => {
+        wrapper.dispatchEvent(new CustomEvent("changeItem", {
+            detail: { animFlagChangeSlide: { interval: [timerId, animTimerId], timer: [nextSlideTimerId] } }
+        }));
+    }
+
+    return { interval: [timerId, animTimerId], timer: [nextSlideTimerId] };
 }
