@@ -1,4 +1,4 @@
-import { onBtnArrow, offBtnArrow, getWidthElem, animFade } from './common/helpers';
+import { offBtnArrowPrev, offBtnArrowNext, onBtnArrowPrev, onBtnArrowNext, getWidthElem } from './common/helpers';
 
 import initControl from './common/init-control';
 import initFullScreen from './common/init-fullscreen';
@@ -62,8 +62,8 @@ class storiesFs {
         swipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         initHeightParent(this.parentStoriesFs);
 
-        offBtnArrow(this.arrowsBtnEl.defBtnPrev);
-        if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrow(this.arrowsBtnEl.defBtnNext);
+        offBtnArrowPrev(this.arrowsBtnEl);
+        if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrowNext(this.arrowsBtnEl);
 
         this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {
             if ((event.detail.btn === 'prev') && !this.playAnimScroll) this.activeIndex--, this.prevSlide(this.activeIndex);
@@ -114,22 +114,22 @@ class storiesFs {
         if (!this.fullScreenMode && !flagAnim) end = (this.widthSlide * activeIndex) - hideLengthTrack;
 
         if (end <= 0) {
-            offBtnArrow(this.arrowsBtnEl.defBtnPrev);
+            offBtnArrowPrev(this.arrowsBtnEl);
             end = 0;
         } else {
-            onBtnArrow(this.arrowsBtnEl.defBtnPrev);
+            onBtnArrowPrev(this.arrowsBtnEl);
         }
 
         if (hideLengthTrack <= 0) {
-            offBtnArrow(this.arrowsBtnEl.defBtnNext);
-            offBtnArrow(this.arrowsBtnEl.defBtnPrev);
+            offBtnArrowNext(this.arrowsBtnEl);
+            offBtnArrowPrev(this.arrowsBtnEl);
             end = 0;
         } else {
-            onBtnArrow(this.arrowsBtnEl.defBtnNext);
+            onBtnArrowNext(this.arrowsBtnEl);
         }
 
         if (end >= hideLengthTrack && hideLengthTrack > 0) {
-            offBtnArrow(this.arrowsBtnEl.defBtnNext);
+            offBtnArrowNext(this.arrowsBtnEl);
             end = hideLengthTrack;
         }
 
