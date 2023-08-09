@@ -7,12 +7,14 @@ import initProgress from './common/init-progress';
 import animProgress from './common/anim-progress';
 import widthSlides from './common/width-slides';
 import swipe from './common/swipe';
+import initHeightParent from './common/height-parent';
 
 import { Options } from './types/options';
 import { Arrows } from './types/arrows';
 
 class storiesFs {
 
+    private wrapperStoriesFsEl = '.stories-fs__wrapper';
     private trackStoriesFsEl = '.stories-fs__track';
     private slidesStoriesFsEl = '.stories-fs__slide';
 
@@ -24,22 +26,24 @@ class storiesFs {
     private countActiveSlide: number = 0;
     private timerId: any = null;
 
+    private parentStoriesFs: HTMLElement;
     private wrapperStoriesFs: Element;
     private trackStoriesFs: HTMLElement;
     private slidesStoriesFs: NodeListOf<Element>;
     private animFlagChangeSlide: any = null;
     private arrowsBtnEl: Arrows;
 
-    constructor(wrapper: string, options: Options) {
-        this.initSfs(wrapper, options);
+    constructor(parent: string, options: Options) {
+        this.initSfs(parent, options);
     }
 
-    private initSfs(wrapper: string, options: Options) {
-        this.wrapperStoriesFs = document.querySelector(wrapper) as Element;
+    private initSfs(parent: string, options: Options) {
+        this.parentStoriesFs = document.querySelector(parent) as HTMLElement;
+        this.wrapperStoriesFs = this.parentStoriesFs.querySelector(this.wrapperStoriesFsEl) as Element;
         this.trackStoriesFs = this.wrapperStoriesFs.querySelector(this.trackStoriesFsEl) as HTMLElement;
         this.slidesStoriesFs = this.wrapperStoriesFs.querySelectorAll(this.slidesStoriesFsEl) as NodeListOf<Element>;
 
-        if (this.wrapperStoriesFs === null) {
+        if (this.parentStoriesFs === null) {
             console.error('Not found parent element');
             return false;
         }
@@ -56,6 +60,7 @@ class storiesFs {
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
         initProgress(this.slidesStoriesFs);
         swipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
+        initHeightParent(this.parentStoriesFs);
 
         offBtnArrow(this.arrowsBtnEl.defBtnPrev);
         if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrow(this.arrowsBtnEl.defBtnNext);
