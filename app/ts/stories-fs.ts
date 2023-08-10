@@ -32,6 +32,7 @@ class storiesFs {
     private slidesStoriesFs: NodeListOf<Element>;
     private animFlagChangeSlide: any = null;
     private arrowsBtnEl: Arrows;
+    private optionsSfs: Options;
 
     constructor(parent: string, options: Options) {
         this.initSfs(parent, options);
@@ -55,6 +56,7 @@ class storiesFs {
 
         this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         this.arrowsBtnEl = initControl(this.wrapperStoriesFs, options);
+        this.optionsSfs = options;
         this.countActiveSlide = this.getCountSlidesInWrapWindow();
 
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
@@ -154,7 +156,7 @@ class storiesFs {
             this.updateAnimationSlide();
         }
 
-        if (this.fullScreenMode) this.updateAnimationSlide(), this.animFlagChangeSlide = animProgress(this.wrapperStoriesFs, this.slidesStoriesFs, activeIndex);
+        if (this.fullScreenMode) this.updateAnimationSlide(), this.animFlagChangeSlide = animProgress(this.wrapperStoriesFs, this.slidesStoriesFs, activeIndex, this.optionsSfs);
 
     }
 

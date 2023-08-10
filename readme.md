@@ -72,3 +72,4 @@ new storiesFs(".stories-fs", {
 | **slidesPerView** | object  |    -    |             -              | The number of slides at a given screen resolution      |
 | **navigation**    | object  |  false  | elBtnPrev &#124; elBtnNext | Replacement of default slider control buttons          |
 | **swipeOnSlide**  | boolean |  true   |     true &#124; false      | Add the ability to switch slides by swipe on the slide |
+| **speedStory**    | number  |  3000   |             -              | Viewing time of one story                              |
