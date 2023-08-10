@@ -4,6 +4,7 @@ new storiesFs(".main__stories-fs", {
     //     elBtnNext: ".main__btn--next",
     // },
     speedStory: 3000,
+    speedAnimNextSlide: 20,
     slidesPerView: {
         320: {
             count: 4,

@@ -44,6 +44,9 @@ class storiesFs {
         this.trackStoriesFs = this.wrapperStoriesFs.querySelector(this.trackStoriesFsEl) as HTMLElement;
         this.slidesStoriesFs = this.wrapperStoriesFs.querySelectorAll(this.slidesStoriesFsEl) as NodeListOf<Element>;
 
+        console.log(options);
+        
+
         if (this.parentStoriesFs === null) {
             console.error('Not found parent element');
             return false;
@@ -106,11 +109,11 @@ class storiesFs {
         if (activeIndex < 0) return this.activeIndex = 0;
 
         let speedTimer: number = 1;
-        let speedScroll: number = 32; // low value = high speed scroll
+        let speedAnimNextSlide: number = (this.optionsSfs.speedAnimNextSlide) ? this.optionsSfs.speedAnimNextSlide : 32;
         let start: number = this.countScrollWrapper;
         let end: number = start + distance;
         let direction: string = (start < end) ? 'next' : 'prev';
-        let period: number = (start < end) ? Math.ceil((end - start) / speedScroll) : Math.ceil((start - end) / speedScroll);
+        let period: number = (start < end) ? Math.ceil((end - start) / speedAnimNextSlide) : Math.ceil((start - end) / speedAnimNextSlide);
         let hideLengthTrack: number = (this.slidesStoriesFs.length - this.countActiveSlide) * this.widthSlide;
         
         if (!flagAnim) end = this.widthSlide * activeIndex;
