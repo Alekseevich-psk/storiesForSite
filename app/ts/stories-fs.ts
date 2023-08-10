@@ -82,7 +82,7 @@ class storiesFs {
 
         this.wrapperStoriesFs.addEventListener('changeFullScreenMode', (event: CustomEvent) => {
             if (event.detail.activeIndex) this.activeIndex = event.detail.activeIndex;
-            
+
             this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options, event.detail.fullScreen);
             this.countActiveSlide = this.getCountSlidesInWrapWindow();
 
@@ -111,30 +111,19 @@ class storiesFs {
         let end: number = start + distance;
         let direction: string = (start < end) ? 'next' : 'prev';
         let period: number = (start < end) ? Math.ceil((end - start) / speedScroll) : Math.ceil((start - end) / speedScroll);
+
         let hideLengthTrack: number = (this.slidesStoriesFs.length - this.countActiveSlide) * this.widthSlide;
+        let widthActiveZoneTrack: number = this.countActiveSlide * this.widthSlide;
+        let widthTrack = this.slidesStoriesFs.length * this.widthSlide;
 
-        if (this.fullScreenMode && !flagAnim) end = this.widthSlide * activeIndex;
-        if (!this.fullScreenMode && !flagAnim) end = (this.widthSlide * activeIndex) - hideLengthTrack;
+        if (!flagAnim) end = this.widthSlide * activeIndex;
 
-        if (end <= 0) {
-            offBtnArrowPrev(this.arrowsBtnEl);
-            end = 0;
-        } else {
-            onBtnArrowPrev(this.arrowsBtnEl);
-        }
+        if (end <= 0) offBtnArrowPrev(this.arrowsBtnEl), end = 0;
+        if (end > 0) onBtnArrowPrev(this.arrowsBtnEl);
+        if (end >= hideLengthTrack && hideLengthTrack > 0) end = hideLengthTrack;
 
-        if (hideLengthTrack <= 0) {
-            offBtnArrowNext(this.arrowsBtnEl);
-            offBtnArrowPrev(this.arrowsBtnEl);
-            end = 0;
-        } else {
-            onBtnArrowNext(this.arrowsBtnEl);
-        }
-
-        if (end >= hideLengthTrack && hideLengthTrack > 0) {
-            offBtnArrowNext(this.arrowsBtnEl);
-            end = hideLengthTrack;
-        }
+        (activeIndex == this.slidesStoriesFs.length - 1 || !this.fullScreenMode && hideLengthTrack + end > widthTrack) ? 
+        offBtnArrowNext(this.arrowsBtnEl) : onBtnArrowNext(this.arrowsBtnEl);
 
         this.countScrollWrapper = end;
 
