@@ -111,18 +111,14 @@ class storiesFs {
         let end: number = start + distance;
         let direction: string = (start < end) ? 'next' : 'prev';
         let period: number = (start < end) ? Math.ceil((end - start) / speedScroll) : Math.ceil((start - end) / speedScroll);
-
         let hideLengthTrack: number = (this.slidesStoriesFs.length - this.countActiveSlide) * this.widthSlide;
-        let widthActiveZoneTrack: number = this.countActiveSlide * this.widthSlide;
-        let widthTrack = this.slidesStoriesFs.length * this.widthSlide;
-
+        
         if (!flagAnim) end = this.widthSlide * activeIndex;
-
         if (end <= 0) offBtnArrowPrev(this.arrowsBtnEl), end = 0;
         if (end > 0) onBtnArrowPrev(this.arrowsBtnEl);
         if (end >= hideLengthTrack && hideLengthTrack > 0) end = hideLengthTrack;
 
-        (activeIndex == this.slidesStoriesFs.length - 1 || !this.fullScreenMode && hideLengthTrack + end > widthTrack) ? 
+        (activeIndex == this.slidesStoriesFs.length - 1 || end >= hideLengthTrack && hideLengthTrack > 0) ? 
         offBtnArrowNext(this.arrowsBtnEl) : onBtnArrowNext(this.arrowsBtnEl);
 
         this.countScrollWrapper = end;
