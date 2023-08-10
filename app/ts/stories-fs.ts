@@ -82,6 +82,7 @@ class storiesFs {
 
         this.wrapperStoriesFs.addEventListener('changeFullScreenMode', (event: CustomEvent) => {
             if (event.detail.activeIndex) this.activeIndex = event.detail.activeIndex;
+            
             this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options, event.detail.fullScreen);
             this.countActiveSlide = this.getCountSlidesInWrapWindow();
 
@@ -164,9 +165,6 @@ class storiesFs {
         if (this.animFlagChangeSlide) {
             for (let index = 0; index < this.animFlagChangeSlide.interval.length; index++) {
                 clearInterval(this.animFlagChangeSlide.interval[index]);
-            }
-            for (let index = 0; index < this.animFlagChangeSlide.timer.length; index++) {
-                clearTimeout(this.animFlagChangeSlide.timer[index]);
             }
         }
     }

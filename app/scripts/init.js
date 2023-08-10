@@ -9,10 +9,10 @@ new storiesFs(".main__stories-fs", {
             count: 4,
         },
         960: {
-            count: 6,
+            count: 5,
         },
         1280: {
-            count: 6,
+            count: 5,
         },
     },
 });

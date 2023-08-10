@@ -1,43 +1,50 @@
 import { Options } from "../types/options";
 
 export default function animProgress(wrapper: Element, elements: NodeListOf<Element>, activeSlideIndex: number, options: Options) {
-    console.log(options);
-    
     const element = elements[activeSlideIndex];
     const progressItems = element.querySelectorAll('.stories-fs__progress-item');
     const progressItemsBg = element.querySelectorAll('.stories-fs__progress-bg');
     const pictureItems = element.querySelectorAll('.stories-fs__inner');
     const speedChangeItems: number = (options.speedStory) ? options.speedStory : 3000;
     const speedProgressItems: number = speedChangeItems / 15;
-    console.log(speedChangeItems);
-    
+
     if (progressItems.length <= 0 || pictureItems.length <= 0 || progressItems.length !== pictureItems.length) return;
 
     const countItems: number = progressItems.length - 1;
-
     let indexActiveItem: number = 0;
-    let timerId: any = null;
-    let animTimerId: any = null;
-    let nextSlideTimerId: any = null;
+    let nextItemTimerID: any = null;
+    let animProgressBgTimerID: any = null;
 
     updateAnimProgress();
     playAnimation();
 
     progressItems.forEach((item, index) => {
         item.addEventListener('click', () => {
-            updateAnimProgress(index);
             indexActiveItem = index;
-            playAnimation();
-            createEventTouchItem();
+            restartAnimationProgress();
         });
     });
 
+    wrapper.addEventListener('holdEvent', (event: CustomEvent) => {
+        (event.detail.holdEvent) ? pauseAnimationProgress() : restartAnimationProgress();
+    });
+
+    function restartAnimationProgress() {
+        updateAnimProgress(indexActiveItem);
+        playAnimation();
+        createEventTouchItem();
+    }
+
     function updateAnimProgress(index: number = 0) {
-        clearInterval(timerId);
-        clearInterval(animTimerId);
-        clearTimeout(nextSlideTimerId);
+        clearInterval(nextItemTimerID);
+        clearInterval(animProgressBgTimerID);
         removeResAnimProgressBg(index);
         removeActiveClass(index);
+    }
+
+    function pauseAnimationProgress() {
+        clearInterval(nextItemTimerID);
+        clearInterval(animProgressBgTimerID);
     }
 
     function playAnimation() {
@@ -45,23 +52,22 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
         pictureItems[indexActiveItem].classList.add('active');
         animProgressBg(indexActiveItem);
 
-        if (indexActiveItem < countItems) {
-            timerId = setInterval(() => {
+        if (indexActiveItem <= countItems) {
+            nextItemTimerID = setInterval(() => {
                 changeActiveItem();
-                if (indexActiveItem >= countItems) {
-                    clearInterval(timerId);
-                    nextSlideTimerId = setTimeout(createEventAnimSlide, speedChangeItems);
-                }
             }, speedChangeItems);
         }
     }
 
     function changeActiveItem() {
+
+        if (indexActiveItem >= countItems) return clearInterval(nextItemTimerID), createEventAnimSlide();
+
         progressItems[indexActiveItem].classList.remove('active');
         pictureItems[indexActiveItem].classList.remove('active');
 
         indexActiveItem++;
-        clearInterval(animTimerId);
+        clearInterval(animProgressBgTimerID);
 
         animProgressBg(indexActiveItem);
         progressItems[indexActiveItem].classList.add('active');
@@ -73,10 +79,10 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
         let start = 10;
         let step = 10;
 
-        animTimerId = setInterval(() => {
+        animProgressBgTimerID = setInterval(() => {
             bgItem.style.width = start + '%';
             start = start + step;
-            if (start > 100) clearInterval(animTimerId);
+            if (start > 100) clearInterval(animProgressBgTimerID);
         }, speedProgressItems);
     }
 
@@ -100,9 +106,9 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
 
     const createEventTouchItem = () => {
         wrapper.dispatchEvent(new CustomEvent("changeItem", {
-            detail: { animFlagChangeSlide: { interval: [timerId, animTimerId], timer: [nextSlideTimerId] } }
+            detail: { animFlagChangeSlide: { interval: [nextItemTimerID, animProgressBgTimerID] } }
         }));
     }
 
-    return { interval: [timerId, animTimerId], timer: [nextSlideTimerId] };
+    return { interval: [nextItemTimerID, animProgressBgTimerID] };
 }
