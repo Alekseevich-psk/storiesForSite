@@ -4,6 +4,7 @@ import initControl from './common/init-control';
 import initFullScreen from './common/init-fullscreen';
 import initProgress from './common/init-progress';
 import initSwipe from './common/init-swipe';
+import lazyLoad from './common/init-lazy-load';
 
 import animProgress from './common/anim-progress';
 import widthSlides from './common/width-slides';
@@ -63,6 +64,7 @@ class StoriesFs {
         initProgress(this.slidesStoriesFs);
         initSwipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         initHeightParent(this.parentStoriesFs);
+        lazyLoad(this.wrapperStoriesFs);
 
         offBtnArrowPrev(this.arrowsBtnEl);
         if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrowNext(this.arrowsBtnEl);
