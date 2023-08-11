@@ -12,7 +12,7 @@ module.exports = {
     },
     output: {
         library: {
-            name: "storiesFs",
+            name: "StoriesFs",
             type: "umd",
             export: "default",
         },

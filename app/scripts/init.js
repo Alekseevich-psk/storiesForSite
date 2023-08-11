@@ -1,9 +1,9 @@
-new storiesFs(".main__stories-fs", {
+new StoriesFs(".main__stories-fs", {
     navigation: {
         elBtnPrev: ".main__btn--prev",
         elBtnNext: ".main__btn--next",
     },
-    speedStory: 3000,
+    speedStory: 6000,
     speedAnimNextSlide: 20,
     slidesPerView: {
         320: {

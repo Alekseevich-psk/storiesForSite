@@ -12,7 +12,7 @@ import initHeightParent from './common/height-parent';
 import { Options } from './types/options';
 import { Arrows } from './types/arrows';
 
-class storiesFs {
+class StoriesFs {
 
     private wrapperStoriesFsEl = '.stories-fs__wrapper';
     private trackStoriesFsEl = '.stories-fs__track';
@@ -160,4 +160,4 @@ class storiesFs {
 
 }
 
-export default storiesFs;
+export default StoriesFs;

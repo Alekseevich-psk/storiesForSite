@@ -6,7 +6,7 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
     const progressItemsBg = element.querySelectorAll('.stories-fs__progress-bg');
     const pictureItems = element.querySelectorAll('.stories-fs__inner');
     const speedChangeItems: number = (options.speedStory) ? options.speedStory : 3000;
-    const speedProgressItems: number = speedChangeItems / 15;
+    const speedProgressItems: number = speedChangeItems / 12;
 
     if (progressItems.length <= 0 || pictureItems.length <= 0 || progressItems.length !== pictureItems.length) return;
 
