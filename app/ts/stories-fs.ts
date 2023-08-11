@@ -112,14 +112,14 @@ class StoriesFs {
         let direction: string = (start < end) ? 'next' : 'prev';
         let period: number = (start < end) ? Math.ceil((end - start) / speedAnimNextSlide) : Math.ceil((start - end) / speedAnimNextSlide);
         let hideLengthTrack: number = (this.slidesStoriesFs.length - this.countActiveSlide) * this.widthSlide;
-        
+
         if (!flagAnim) end = this.widthSlide * activeIndex;
         if (end <= 0) offBtnArrowPrev(this.arrowsBtnEl), end = 0;
         if (end > 0) onBtnArrowPrev(this.arrowsBtnEl);
         if (end >= hideLengthTrack && hideLengthTrack > 0) end = hideLengthTrack;
 
-        (activeIndex == this.slidesStoriesFs.length - 1 || end >= hideLengthTrack && hideLengthTrack > 0) ? 
-        offBtnArrowNext(this.arrowsBtnEl) : onBtnArrowNext(this.arrowsBtnEl);
+        (activeIndex == this.slidesStoriesFs.length - 1 || end >= hideLengthTrack && hideLengthTrack > 0) ?
+            offBtnArrowNext(this.arrowsBtnEl) : onBtnArrowNext(this.arrowsBtnEl);
 
         this.countScrollWrapper = end;
 
@@ -142,7 +142,10 @@ class StoriesFs {
             this.updateAnimationSlide();
         }
 
-        if (this.fullScreenMode) this.updateAnimationSlide(), this.animFlagChangeSlide = animProgress(this.wrapperStoriesFs, this.slidesStoriesFs, activeIndex, this.optionsSfs);
+        if (this.fullScreenMode) {
+            this.updateAnimationSlide();
+            this.animFlagChangeSlide = animProgress(this.wrapperStoriesFs, this.slidesStoriesFs, activeIndex, this.optionsSfs);
+        }
 
     }
 
