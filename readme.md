@@ -19,7 +19,7 @@ With Stories-FS, you can create professional-quality visual content.
 3. Init
 
 ```js
-new storiesFs(".stories-fs", {
+new StoriesFs(".stories-fs", {
     slidesPerView: {
         320: {
             count: 4,
