@@ -49,7 +49,7 @@
                     justify-content: center;
 
                     @media (max-width: 768px) {
-                        padding: 60px 0;
+                        padding: 40px 0;
                     }
 
                     &:hover {
@@ -125,17 +125,36 @@
         }
     }
 
+    &__text {
+        position: absolute;
+        bottom: 24px;
+        width: 96%;
+        left: 2%;
+        background-color: #fff;
+        padding: 12px;
+        border-radius: 8px;
+        text-align: center;
+        line-height: 110%;
+    }
+
+    &__date {
+        position: absolute;
+        bottom: 0px;
+        font-size: 13px;
+        color: blue;
+        width: 100%;
+        text-align: center;
+    }
+
     &__slide {
         position: relative;
         flex-grow: 0;
         flex-shrink: 0;
         height: auto;
         align-items: center;
-        // transition: $transition;
         padding: 10px;
         border: 1px solid transparent;
         border-radius: 50%;
-        // will-change: transform;
 
         &:hover {
             border: 1px solid rgb(226, 226, 226);
@@ -239,7 +258,7 @@
         display: none;
 
         @media (max-width: 768px) {
-            top: 14px;
+            top: 8px;
         }
 
         &:hover {

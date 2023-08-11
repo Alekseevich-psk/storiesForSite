@@ -44,9 +44,6 @@ class storiesFs {
         this.trackStoriesFs = this.wrapperStoriesFs.querySelector(this.trackStoriesFsEl) as HTMLElement;
         this.slidesStoriesFs = this.wrapperStoriesFs.querySelectorAll(this.slidesStoriesFsEl) as NodeListOf<Element>;
 
-        console.log(options);
-        
-
         if (this.parentStoriesFs === null) {
             console.error('Not found parent element');
             return false;
