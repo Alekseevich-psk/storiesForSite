@@ -60,8 +60,13 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
     }
 
     function changeActiveItem() {
-
-        if (indexActiveItem >= countItems) return clearInterval(nextItemTimerID), createEventAnimSlide();
+        console.log(options.autoPlayFullScreen);
+        if (indexActiveItem >= countItems){
+            clearInterval(nextItemTimerID); 
+           
+            if(options.autoPlayFullScreen) createEventAnimSlide();
+            return;
+        }
 
         progressItems[indexActiveItem].classList.remove('active');
         pictureItems[indexActiveItem].classList.remove('active');

@@ -1,7 +1,6 @@
 export default function lazyLoad(wrapper: Element) {
     const pictures = wrapper.querySelectorAll('.stories-fs__inner img');
     if (pictures.length <= 0) return;
-    console.log(pictures);
 
     let observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(function (entry) {
