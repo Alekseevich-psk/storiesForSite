@@ -55,6 +55,10 @@ class StoriesFs {
             return false;
         }
 
+        if (options.aspectRatioNonePreview) {
+            this.trackStoriesFs.classList.add('aspect-ratio-none');
+        }
+
         this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         this.arrowsBtnEl = initControl(this.wrapperStoriesFs, options);
         this.optionsSfs = options;
