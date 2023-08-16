@@ -1,7 +1,7 @@
 {
     "name": "stories-fs",
     "description": "stories-fs - just stories for the site",
-    "version": "1.0.18",
+    "version": "1.0.19",
     "main": "stories-fs.js",
     "scripts": {
         "build": "webpack",
