@@ -1,9 +1,11 @@
-export default function initProgress(elements: NodeListOf<Element>) {
+import { Options } from '../types/options';
+
+export default function initProgress(elements: NodeListOf<Element>, options: Options) {
     elements.forEach(element => {
         const elementWrapper = element.querySelector('.stories-fs__sub-wrapper');
         const elementInner = element.querySelectorAll('.stories-fs__inner') as NodeListOf<Element>;
-
-        const progressWrapperHTML = `<div class="stories-fs__progress"></div>`;
+        const hideClass = (options.storiesMode) ? '' : 'hide';
+        const progressWrapperHTML = `<div class="stories-fs__progress ${hideClass}"></div>`;
         elementWrapper.insertAdjacentHTML('afterbegin', progressWrapperHTML);
         
         const progressWrapper = element.querySelector('.stories-fs__progress');

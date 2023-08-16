@@ -61,7 +61,7 @@ class StoriesFs {
         this.countActiveSlide = this.getCountSlidesInWrapWindow();
 
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
-        initProgress(this.slidesStoriesFs);
+        initProgress(this.slidesStoriesFs, options);
         initSwipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         initHeightParent(this.parentStoriesFs);
         lazyLoad(this.wrapperStoriesFs);

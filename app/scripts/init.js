@@ -5,6 +5,7 @@ new StoriesFs(".main__stories-fs", {
     },
     speedStory: 6000,
     autoPlayFullScreen: true,
+    storiesMode: false,
     speedAnimNextSlide: 20,
     slidesPerView: {
         320: {

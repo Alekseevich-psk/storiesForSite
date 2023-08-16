@@ -73,5 +73,6 @@ new StoriesFs(".stories-fs", {
 | **navigation**         | object  |  false  | elBtnPrev &#124; elBtnNext | Replacement of default slider control buttons             |
 | **swipeOnSlide**       | boolean |  true   |     true &#124; false      | Add the ability to switch slides by swipe on the slide    |
 | **autoPlayFullScreen** | boolean |  false  |     true &#124; false      | Toggles the slide when completing the item count          |
+| **storiesMode**        | boolean |  true   |     true &#124; false      | If false the progress bar is hidden                       |
 | **speedStory**         | number  |  3000   |             -              | Viewing time of one story                                 |
 | **speedAnimNextSlide** | number  |   32    |             -              | Speed animation next slide. low value = high speed scroll |
