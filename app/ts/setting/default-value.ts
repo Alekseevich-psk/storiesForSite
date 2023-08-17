@@ -4,6 +4,7 @@ export default function defOptions() {
     const obj: Options = {
         aspectRatioPreview: true,
         autoPlayFullScreen: false,
+        storiesMode: true,
         speedStory: 3000,
         speedAnimNextSlide: 32,
         navigation: {

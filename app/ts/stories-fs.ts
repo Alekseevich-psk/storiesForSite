@@ -2,6 +2,7 @@ import { offBtnArrowPrev, offBtnArrowNext, onBtnArrowPrev, onBtnArrowNext, getWi
 import defOptions from './setting/default-value';
 
 import initControl from './init/init-control';
+import initBtnItem from './init/init-btn-item';
 import initFullScreen from './init/init-fullscreen';
 import initProgress from './init/init-progress';
 import initSwipe from './init/init-swipe';
@@ -36,6 +37,8 @@ class StoriesFs {
     private arrowsBtnEl: Arrows;
     private optionsSfs: Options;
 
+    private animProgressFoo: any = null;
+
     constructor(parent: string, options: Options) {
         this.optionsSfs = Object.assign(defOptions(), options);
         this.initSfs(parent, this.optionsSfs);
@@ -68,6 +71,7 @@ class StoriesFs {
 
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
         initProgress(this.slidesStoriesFs, options);
+        initBtnItem(this.wrapperStoriesFs, options);
         initSwipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         initHeightParent(this.parentStoriesFs);
         initLazyLoad(this.wrapperStoriesFs);
@@ -75,7 +79,7 @@ class StoriesFs {
         offBtnArrowPrev(this.arrowsBtnEl);
         if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrowNext(this.arrowsBtnEl);
 
-        this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {
+        this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {            
             if ((event.detail.btn === 'prev') && !this.playAnimScroll) this.activeIndex--, this.prevSlide(this.activeIndex);
             if ((event.detail.btn === 'next') && !this.playAnimScroll) this.activeIndex++, this.nextSlide(this.activeIndex);
         });

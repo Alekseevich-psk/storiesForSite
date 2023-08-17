@@ -21,7 +21,7 @@ new StoriesFs(".main__stories-fs", {
         elBtnNext: ".main__btn--next",
     },
     speedStory: 6000,
-    autoPlayFullScreen: true,
+    // autoPlayFullScreen: true,
     speedAnimNextSlide: 50,
     slidesPerView: {
         320: {

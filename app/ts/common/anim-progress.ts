@@ -15,11 +15,12 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
     let nextItemTimerID: any = null;
     let animProgressBgTimerID: any = null;
 
-    updateAnimProgress();
     playAnimation();
 
     progressItems.forEach((item, index) => {
         item.addEventListener('click', () => {
+            console.log('test');
+
             indexActiveItem = index;
             restartAnimationProgress();
         });
@@ -27,6 +28,28 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
 
     wrapper.addEventListener('holdEvent', (event: CustomEvent) => {
         (event.detail.holdEvent) ? pauseAnimationProgress() : restartAnimationProgress();
+    });
+
+    wrapper.addEventListener('changeItemSlide', (event: CustomEvent) => {
+        console.log(event.detail.btn);
+
+        if (event.detail.btn === 'next') indexActiveItem++;
+        if (event.detail.btn === 'prev') indexActiveItem--;
+        // console.log(indexActiveItem);
+
+        if (indexActiveItem > countItems) {
+            indexActiveItem = countItems;
+            return createEventAnimSlide();
+        }
+
+        if (indexActiveItem < 0) {
+            wrapper.dispatchEvent(new CustomEvent("changeSlide", {
+                detail: { btn: 'prev' }
+            }));
+            return indexActiveItem = 0;
+        }
+
+        restartAnimationProgress();
     });
 
     function restartAnimationProgress() {
@@ -60,10 +83,10 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
     }
 
     function changeActiveItem() {
-        if (indexActiveItem >= countItems){
-            clearInterval(nextItemTimerID); 
-           
-            if(options.autoPlayFullScreen) createEventAnimSlide();
+        if (indexActiveItem >= countItems) {
+            clearInterval(nextItemTimerID);
+
+            if (options.autoPlayFullScreen) createEventAnimSlide();
             return;
         }
 

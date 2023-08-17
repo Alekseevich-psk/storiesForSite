@@ -71,6 +71,12 @@
                         right: 6px;
                     }
                 }
+
+                &__btn-item {
+                    @media(max-width: 768px) {
+                        display: block;
+                    }
+                }
             }
 
             .hide-arrows {
@@ -288,6 +294,24 @@
     img {
         user-select: none;
         pointer-events: none;
+    }
+
+    &__btn-item {
+        position: absolute;
+        display: none;
+        top: 10%;
+        height: 80%;
+        width: 35%;
+        background-color: #000;
+        z-index: 2;
+
+        &--prev {
+            left: 0;
+        }
+
+        &--next {
+            right: 0;
+        }
     }
 }
 
