@@ -1,5 +1,5 @@
 import { offBtnArrowPrev, offBtnArrowNext, onBtnArrowPrev, onBtnArrowNext, getWidthElem } from './common/helpers';
-import { defOptions } from './setting/default-value';
+import defOptions from './setting/default-value';
 
 import initControl from './init/init-control';
 import initFullScreen from './init/init-fullscreen';
@@ -37,7 +37,7 @@ class StoriesFs {
     private optionsSfs: Options;
 
     constructor(parent: string, options: Options) {
-        this.optionsSfs = Object.assign(defOptions, options);
+        this.optionsSfs = Object.assign(defOptions(), options);
         this.initSfs(parent, this.optionsSfs);
     }
 
@@ -57,10 +57,13 @@ class StoriesFs {
             return false;
         }
 
-        if (typeof options.aspectRatioPreview === "undefined" ? false : !options.aspectRatioPreview) {
-            this.trackStoriesFs.classList.add('aspect-ratio-none');
+
+
+        if (options.aspectRatioPreview) {
+            this.trackStoriesFs.classList.add('aspect-ratio');
         }
 
+        // initHeightParent(this.parentStoriesFs);
         this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         this.arrowsBtnEl = initControl(this.wrapperStoriesFs, options);
         this.optionsSfs = options;
@@ -69,7 +72,6 @@ class StoriesFs {
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
         initProgress(this.slidesStoriesFs, options);
         initSwipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
-        initHeightParent(this.parentStoriesFs);
         lazyLoad(this.wrapperStoriesFs);
 
         offBtnArrowPrev(this.arrowsBtnEl);

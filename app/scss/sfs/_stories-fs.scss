@@ -16,6 +16,7 @@
         from {
             opacity: 0;
         }
+
         to {
             opacity: 1;
         }
@@ -81,6 +82,39 @@
     &__track {
         display: flex;
         transform: translate3d(0, 0, 0);
+
+        &.aspect-ratio {
+
+            .stories-fs {
+
+                &__slide {
+                    border: 1px solid transparent;
+                    border-radius: 50%;
+
+                    &:hover {
+                        border: 1px solid rgb(226, 226, 226);
+                    }
+                }
+
+                &__preview {
+                    &:after {
+                        position: relative;
+                        display: block;
+                        content: "";
+                        z-index: 10;
+                        width: 100%;
+                        padding-bottom: 100%;
+                    }
+
+                    img {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
     }
 
     &__sub-wrapper {
@@ -153,12 +187,6 @@
         height: auto;
         align-items: center;
         padding: 10px;
-        border: 1px solid transparent;
-        border-radius: 50%;
-
-        &:hover {
-            border: 1px solid rgb(226, 226, 226);
-        }
     }
 
     &__progress {
@@ -224,23 +252,10 @@
         z-index: 2;
         cursor: pointer;
 
-        &:after {
-            position: relative;
-            display: block;
-            content: "";
-            z-index: 10;
-            width: 100%;
-            padding-bottom: 100%;
-        }
-
         img {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%;
         }
     }
 

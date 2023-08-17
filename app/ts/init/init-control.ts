@@ -13,8 +13,8 @@ export default function initControl(wrapper: Element, options: Options) {
 
     wrapper.insertAdjacentHTML('afterbegin', controlElements);
     const arrowsWrapper = wrapper.querySelector('.stories-fs__arrows');
-
-    if (options.navigation?.elBtnPrev && options.navigation?.elBtnNext) {
+    
+    if (options.navigation && options.navigation?.elBtnPrev !== null && options.navigation?.elBtnNext !== null) {
         let elemPrev = document.querySelector(options.navigation.elBtnPrev);
         let elemNext = document.querySelector(options.navigation.elBtnNext);
 
