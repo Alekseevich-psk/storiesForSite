@@ -5,7 +5,7 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
     const progressItems = element.querySelectorAll('.stories-fs__progress-item');
     const progressItemsBg = element.querySelectorAll('.stories-fs__progress-bg');
     const pictureItems = element.querySelectorAll('.stories-fs__inner');
-    const speedChangeItems: number = (options.speedStory) ? options.speedStory : 3000;
+    const speedChangeItems: number = options.speedStory;
     const speedProgressItems: number = speedChangeItems / 12;
 
     if (progressItems.length <= 0 || pictureItems.length <= 0 || progressItems.length !== pictureItems.length) return;
@@ -60,7 +60,6 @@ export default function animProgress(wrapper: Element, elements: NodeListOf<Elem
     }
 
     function changeActiveItem() {
-        console.log(options.autoPlayFullScreen);
         if (indexActiveItem >= countItems){
             clearInterval(nextItemTimerID); 
            

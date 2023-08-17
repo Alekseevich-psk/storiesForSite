@@ -81,31 +81,6 @@
     &__track {
         display: flex;
         transform: translate3d(0, 0, 0);
-
-        &.aspect-ratio-none {
-            .stories-fs {
-                &__slide {
-                    
-                    &:hover {
-                        border: 1px solid transparent;
-                    }
-
-                    img {
-                        position: relative;
-                        border-radius: 0;
-                        top: auto !important;
-                        left: auto;
-                        min-height: 100%;
-                    }
-                }
-
-                &__preview {
-                    &:after {
-                        display: none;
-                    }
-                }
-            }
-        }
     }
 
     &__sub-wrapper {

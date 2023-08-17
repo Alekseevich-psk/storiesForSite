@@ -1,10 +1,11 @@
 import { offBtnArrowPrev, offBtnArrowNext, onBtnArrowPrev, onBtnArrowNext, getWidthElem } from './common/helpers';
+import { defOptions } from './setting/default-value';
 
-import initControl from './common/init-control';
-import initFullScreen from './common/init-fullscreen';
-import initProgress from './common/init-progress';
-import initSwipe from './common/init-swipe';
-import lazyLoad from './common/init-lazy-load';
+import initControl from './init/init-control';
+import initFullScreen from './init/init-fullscreen';
+import initProgress from './init/init-progress';
+import initSwipe from './init/init-swipe';
+import lazyLoad from './init/init-lazy-load';
 
 import animProgress from './common/anim-progress';
 import widthSlides from './common/width-slides';
@@ -36,7 +37,8 @@ class StoriesFs {
     private optionsSfs: Options;
 
     constructor(parent: string, options: Options) {
-        this.initSfs(parent, options);
+        this.optionsSfs = Object.assign(defOptions, options);
+        this.initSfs(parent, this.optionsSfs);
     }
 
     private initSfs(parent: string, options: Options) {
@@ -55,9 +57,6 @@ class StoriesFs {
             return false;
         }
 
-        console.log(typeof options.aspectRatioPreview === "undefined" ? false : !options.aspectRatioPreview);
-
-        // typeof options.aspectRatioPreview === "undefined" ? true : options.aspectRatioPreview
         if (typeof options.aspectRatioPreview === "undefined" ? false : !options.aspectRatioPreview) {
             this.trackStoriesFs.classList.add('aspect-ratio-none');
         }
@@ -115,7 +114,7 @@ class StoriesFs {
         if (activeIndex < 0) return this.activeIndex = 0;
 
         let speedTimer: number = 1;
-        let speedAnimNextSlide: number = (this.optionsSfs.speedAnimNextSlide) ? this.optionsSfs.speedAnimNextSlide : 32;
+        let speedAnimNextSlide: number = this.optionsSfs.speedAnimNextSlide;
         let start: number = this.countScrollWrapper;
         let end: number = start + distance;
         let direction: string = (start < end) ? 'next' : 'prev';
