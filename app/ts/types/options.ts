@@ -3,7 +3,7 @@ export type Options = {
     swipeOnSlide?: boolean,
     autoPlayFullScreen: boolean,
     storiesMode: boolean,
-    aspectRatioNonePreview: boolean,
+    aspectRatioPreview: boolean,
     sliderMode: boolean,
     speedStory?: number,
     speedAnimNextSlide?: number,

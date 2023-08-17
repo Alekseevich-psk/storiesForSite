@@ -55,7 +55,10 @@ class StoriesFs {
             return false;
         }
 
-        if (options.aspectRatioNonePreview) {
+        console.log(typeof options.aspectRatioPreview === "undefined" ? false : !options.aspectRatioPreview);
+
+        // typeof options.aspectRatioPreview === "undefined" ? true : options.aspectRatioPreview
+        if (typeof options.aspectRatioPreview === "undefined" ? false : !options.aspectRatioPreview) {
             this.trackStoriesFs.classList.add('aspect-ratio-none');
         }
 
