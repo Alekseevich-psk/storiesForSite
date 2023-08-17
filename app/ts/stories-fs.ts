@@ -5,7 +5,7 @@ import initControl from './init/init-control';
 import initFullScreen from './init/init-fullscreen';
 import initProgress from './init/init-progress';
 import initSwipe from './init/init-swipe';
-import lazyLoad from './init/init-lazy-load';
+import initLazyLoad from './init/init-lazy-load';
 
 import animProgress from './common/anim-progress';
 import widthSlides from './common/width-slides';
@@ -57,13 +57,10 @@ class StoriesFs {
             return false;
         }
 
-
-
         if (options.aspectRatioPreview) {
             this.trackStoriesFs.classList.add('aspect-ratio');
         }
 
-        // initHeightParent(this.parentStoriesFs);
         this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         this.arrowsBtnEl = initControl(this.wrapperStoriesFs, options);
         this.optionsSfs = options;
@@ -72,7 +69,8 @@ class StoriesFs {
         initFullScreen(this.wrapperStoriesFs, this.slidesStoriesFs);
         initProgress(this.slidesStoriesFs, options);
         initSwipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
-        lazyLoad(this.wrapperStoriesFs);
+        initHeightParent(this.parentStoriesFs);
+        initLazyLoad(this.wrapperStoriesFs);
 
         offBtnArrowPrev(this.arrowsBtnEl);
         if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrowNext(this.arrowsBtnEl);

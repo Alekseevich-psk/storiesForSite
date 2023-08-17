@@ -1,4 +1,4 @@
-export default function lazyLoad(wrapper: Element) {
+export default function initLazyLoad(wrapper: Element) {
     const pictures = wrapper.querySelectorAll('.stories-fs__inner img');
     if (pictures.length <= 0) return;
 
