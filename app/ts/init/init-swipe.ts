@@ -3,7 +3,7 @@ import { Options } from '../types/options';
 export default function swipe(wrapper: Element, slides: NodeListOf<Element>, options: Options) {
     if (options.swipeOnSlide === false) return;
 
-    const minDistance = 50;
+    const minDistance = 30;
     let xTouchStart: number = null;
     let xTouchEnd: number = null;
     let timerId: any = null;

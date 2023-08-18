@@ -81,16 +81,31 @@ class StoriesFs {
         offBtnArrowPrev(this.arrowsBtnEl);
         if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrowNext(this.arrowsBtnEl);
 
+        this.wrapperStoriesFs.addEventListener('holdEvent', (event: CustomEvent) => {
+            if (event.detail.holdEvent) {
+                removeIntervals(this.storyTimersId);
+            } else {
+                playStory(this.wrapperStoriesFs, this.slidesStoriesFs, this.activeIndex, this.optionsSfs, this.activeIndexStory);
+            }
+        });
+
         this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {
             if (this.playAnimScroll) return;
-            this.updateStory();
-            if ((event.detail.btn === 'prev') && !this.playAnimScroll) this.activeIndex--, this.prevSlide(this.activeIndex);
-            if ((event.detail.btn === 'next') && !this.playAnimScroll) this.activeIndex++, this.nextSlide(this.activeIndex);
+
+            if (event.detail.btn === 'prev' && this.activeIndex > 0) {
+                this.updateStory();
+                this.activeIndex--;
+                this.prevSlide(this.activeIndex);
+            }
+
+            if (event.detail.btn === 'next') {
+                this.updateStory();
+                this.activeIndex++;
+                this.nextSlide(this.activeIndex);
+            }
         });
 
         this.wrapperStoriesFs.addEventListener('changeItem', (event: CustomEvent) => {
-            console.log(this.activeIndexStory, this.activeIndex);
-            
             this.storyTimersId = event.detail.intervals;
             this.activeIndexStory = event.detail.index;
         });
@@ -109,13 +124,13 @@ class StoriesFs {
             }
 
             if (this.activeIndex === this.slidesStoriesFs.length - 1) {
-                const countStory = this.slidesStoriesFs[this.activeIndex].querySelectorAll('.stories-fs__inner').length;
+                const stories = this.slidesStoriesFs[this.activeIndex].querySelectorAll('.stories-fs__inner');
 
-                if (this.activeIndexStory >= countStory) {
+                if (this.activeIndexStory >= stories.length) {
                     // bug
                     const btnClose = this.wrapperStoriesFs.querySelector('.stories-fs__btn-close') as HTMLElement;
                     btnClose.click();
-                    return this.activeIndexStory = countStory;
+                    return this.activeIndexStory = stories.length;
                 }
             }
 
@@ -125,8 +140,13 @@ class StoriesFs {
 
         this.wrapperStoriesFs.addEventListener('endAnimationSlide', (event: CustomEvent) => {
             this.storyTimersId = event.detail.intervals;
+            
             if (this.activeIndex < (this.slidesStoriesFs.length - 1)) this.updateStory();
-            if (event.detail.activeSlide === this.activeIndex && this.fullScreenMode) this.activeIndex++, this.nextSlide(this.activeIndex);
+
+            if (event.detail.activeSlide === this.activeIndex && this.fullScreenMode) {
+                this.activeIndex++;
+                this.nextSlide(this.activeIndex);
+            }
         });
 
         this.wrapperStoriesFs.addEventListener('changeFullScreenMode', (event: CustomEvent) => {

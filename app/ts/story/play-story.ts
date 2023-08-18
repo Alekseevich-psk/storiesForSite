@@ -13,7 +13,7 @@ export default function playStory(wrapper: Element, elements: NodeListOf<Element
     if (progressItems.length <= 0 || pictureItems.length <= 0 || progressItems.length !== pictureItems.length) return;
 
     const countItems: number = progressItems.length - 1;
-    
+
     let indexActiveItem: number = activeIndexStory;
     let nextItemTimerID: any = null;
     let animProgressBgTimerID: any = null;
@@ -22,33 +22,13 @@ export default function playStory(wrapper: Element, elements: NodeListOf<Element
 
     function playStory(index: number) {
 
-        if(indexActiveItem > countItems) {
+        if (indexActiveItem > countItems) {
             return createEventEndAnimSlide();
         }
-        
+
         pictureItems[index].classList.add('active');
         animProgressBg(index);
         createEventChangeItem(index);
-    }
-
-    function restartAnimationProgress() {
-
-    }
-
-    function updateAnimProgress(index: number = 0) {
-
-    }
-
-    function pauseAnimationProgress() {
-
-    }
-
-    function playAnimation() {
-
-    }
-
-    function changeActiveItem() {
-
     }
 
     function animProgressBg(index: number) {
@@ -63,7 +43,7 @@ export default function playStory(wrapper: Element, elements: NodeListOf<Element
             if (start > 100) {
                 clearInterval(animProgressBgTimerID);
                 indexActiveItem++;
-                
+
                 if (indexActiveItem <= countItems) {
                     playStory(indexActiveItem);
                     createEventChangeItem(indexActiveItem);
