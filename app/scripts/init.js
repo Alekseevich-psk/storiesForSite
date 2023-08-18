@@ -1,18 +1,18 @@
-// new StoriesFs(".second__stories-fs", {
-//     storiesMode: false,
-//     aspectRatioPreview: false,
-//     slidesPerView: {
-//         320: {
-//             count: 4,
-//         },
-//         960: {
-//             count: 5,
-//         },
-//         1280: {
-//             count: 5,
-//         },
-//     },
-// });
+new StoriesFs(".second__stories-fs", {
+    storiesMode: false,
+    aspectRatioPreview: false,
+    slidesPerView: {
+        320: {
+            count: 4,
+        },
+        960: {
+            count: 5,
+        },
+        1280: {
+            count: 5,
+        },
+    },
+});
 
 
 new StoriesFs(".main__stories-fs", {
