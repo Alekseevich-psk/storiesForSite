@@ -110,6 +110,9 @@ class StoriesFs {
                 const countStory = this.slidesStoriesFs[this.activeIndex].querySelectorAll('.stories-fs__inner').length;
 
                 if (this.activeIndexStory >= countStory) {
+                    // bug
+                    const btnClose = this.wrapperStoriesFs.querySelector('.stories-fs__btn-close') as HTMLElement;
+                    btnClose.click();
                     return this.activeIndexStory = countStory;
                 }
             }
