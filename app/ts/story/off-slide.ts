@@ -1,5 +1,5 @@
-export default function offSlide(elements: NodeListOf<Element>, activeSlideIndex: number, timers: Array<number>) {
-    if(activeSlideIndex <= 1 || activeSlideIndex >= elements.length - 1 ) return;
+export default function offSlide(elements: NodeListOf<Element>, activeSlideIndex: number, activeSlideIndexStory: number, timers: Array<number>) {
+    if ((activeSlideIndex === 0 && activeSlideIndexStory === -1) || activeSlideIndex >= elements.length - 1) return;
     const element = elements[activeSlideIndex];
 
     const progressItems = element.querySelectorAll('.stories-fs__progress-item');

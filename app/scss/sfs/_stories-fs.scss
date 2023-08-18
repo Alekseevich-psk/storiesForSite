@@ -74,6 +74,8 @@
 
                 &__btn-item {
                     display: block;
+                    background-color: transparent;
+                    
                     @media(max-width: 768px) {
                         display: block;
                     }
