@@ -30,3 +30,11 @@ export function animFade(elem: Element) {
         elem.classList.remove('fade');
     }, 400);
 }
+
+export function removeIntervals(timers: Array<number>) {
+    if (timers !== null) {
+        timers.forEach(el => {
+            clearInterval(el);
+        });
+    }
+}

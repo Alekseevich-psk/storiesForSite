@@ -67,10 +67,8 @@ export default function widthSlides(wrapper: Element, slides: NodeList, options:
                 res = optionWidth[key] as tObj;
             }
         });
-
         return res.count;
     }
-
 
     return widthSlide;
 }

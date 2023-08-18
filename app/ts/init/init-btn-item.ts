@@ -12,7 +12,7 @@ export default function initBtnItem(wrapper: Element, options: Options) {
     const btnItemNext: Element = wrapper.querySelector('.stories-fs__btn-item--next');
 
     function initEventChangeItem(motion: string) {
-        wrapper.dispatchEvent(new CustomEvent("changeItemSlide", {
+        wrapper.dispatchEvent(new CustomEvent("clickBtnChangeItem", {
             detail: { btn: (motion === 'prev') ? 'prev' : 'next' }
         }));
     }
