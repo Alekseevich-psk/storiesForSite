@@ -10,11 +10,13 @@ import initLazyLoad from './init/init-lazy-load';
 
 import playStory from './story/play-story';
 import offSlide from './story/off-slide';
+import itemStories from './story/item-stories';
 
 import widthSlides from './common/width-slides';
 import initHeightParent from './common/height-parent';
 
 import { Options } from './types/options';
+import { paramPlayStory } from './types/param-play-story';
 import { Arrows } from './types/arrows';
 
 class StoriesFs {
@@ -33,6 +35,8 @@ class StoriesFs {
 
     private timerId: any = null;
     private storyTimersId: any = null;
+
+    private paramPlayStory: paramPlayStory;
 
     private parentStoriesFs: HTMLElement;
     private wrapperStoriesFs: Element;
@@ -77,6 +81,15 @@ class StoriesFs {
         initSwipe(this.wrapperStoriesFs, this.slidesStoriesFs, options);
         initHeightParent(this.parentStoriesFs);
         initLazyLoad(this.wrapperStoriesFs);
+        itemStories(this.wrapperStoriesFs, this.slidesStoriesFs);
+
+        this.paramPlayStory = {
+            wrapperStoriesFs: this.wrapperStoriesFs,
+            slidesStoriesFs: this.slidesStoriesFs,
+            optionsSfs: this.optionsSfs,
+            activeIndex: this.activeIndex,
+            activeIndexStory: this.activeIndexStory
+        }
 
         offBtnArrowPrev(this.arrowsBtnEl);
         if (this.countActiveSlide >= this.slidesStoriesFs.length) offBtnArrowNext(this.arrowsBtnEl);
@@ -85,12 +98,14 @@ class StoriesFs {
             if (event.detail.holdEvent) {
                 removeIntervals(this.storyTimersId);
             } else {
-                playStory(this.wrapperStoriesFs, this.slidesStoriesFs, this.activeIndex, this.optionsSfs, this.activeIndexStory);
+                this.updateIndex();
+                playStory(this.paramPlayStory);
             }
         });
 
         this.wrapperStoriesFs.addEventListener('changeSlide', (event: CustomEvent) => {
             if (this.playAnimScroll) return;
+            this.activeIndexStory = 0;
 
             if (event.detail.btn === 'prev' && this.activeIndex > 0) {
                 this.updateStory();
@@ -98,7 +113,7 @@ class StoriesFs {
                 this.prevSlide(this.activeIndex);
             }
 
-            if (event.detail.btn === 'next') {
+            if (event.detail.btn === 'next' && this.activeIndex < this.slidesStoriesFs.length - 1) {
                 this.updateStory();
                 this.activeIndex++;
                 this.nextSlide(this.activeIndex);
@@ -108,6 +123,17 @@ class StoriesFs {
         this.wrapperStoriesFs.addEventListener('changeItem', (event: CustomEvent) => {
             this.storyTimersId = event.detail.intervals;
             this.activeIndexStory = event.detail.index;
+        });
+
+        this.wrapperStoriesFs.addEventListener('clickItem', (event: CustomEvent) => {
+            if (!this.fullScreenMode || this.playAnimScroll) return;
+
+            this.updateStory();
+            this.activeIndex = event.detail.activeIndex;
+            this.activeIndexStory = event.detail.activeItem;
+
+            this.updateIndex();
+            playStory(this.paramPlayStory);
         });
 
         this.wrapperStoriesFs.addEventListener('clickBtnChangeItem', (event: CustomEvent) => {
@@ -135,12 +161,14 @@ class StoriesFs {
             }
 
             this.updateStory();
-            playStory(this.wrapperStoriesFs, this.slidesStoriesFs, this.activeIndex, this.optionsSfs, this.activeIndexStory);
+            this.updateIndex();
+            playStory(this.paramPlayStory);
         });
 
         this.wrapperStoriesFs.addEventListener('endAnimationSlide', (event: CustomEvent) => {
             this.storyTimersId = event.detail.intervals;
-            
+            this.activeIndexStory = 0;
+
             if (this.activeIndex < (this.slidesStoriesFs.length - 1)) this.updateStory();
 
             if (event.detail.activeSlide === this.activeIndex && this.fullScreenMode) {
@@ -168,18 +196,6 @@ class StoriesFs {
 
     private prevSlide(activeIndex: number) {
         this.scrollTrack((-1 * this.widthSlide), true, activeIndex);
-    }
-
-    private closeFullScreen() {
-        this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, this.optionsSfs, false);
-        this.countActiveSlide = this.getCountSlidesInWrapWindow();
-        this.fullScreenMode = false;
-
-        this.updateStory();
-        this.scrollTrack(this.widthSlide, false, this.activeIndex);
-
-        this.wrapperStoriesFs.classList.remove('fullscreen');
-        document.querySelector('body').classList.remove('overflow');
     }
 
     private nextSlide(activeIndex: number) {
@@ -229,9 +245,15 @@ class StoriesFs {
         }
 
         if (this.fullScreenMode) {
-            playStory(this.wrapperStoriesFs, this.slidesStoriesFs, activeIndex, this.optionsSfs);
+            this.updateIndex();
+            playStory(this.paramPlayStory);
         }
 
+    }
+
+    private updateIndex() {
+        this.paramPlayStory.activeIndex = this.activeIndex;
+        this.paramPlayStory.activeIndexStory = this.activeIndexStory
     }
 
     private getCountSlidesInWrapWindow() {

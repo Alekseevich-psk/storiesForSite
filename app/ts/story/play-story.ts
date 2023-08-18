@@ -1,7 +1,10 @@
 import { Options } from "../types/options";
+import { paramPlayStory } from '../types/param-play-story';
 
-export default function playStory(wrapper: Element, elements: NodeListOf<Element>, activeSlideIndex: number, options: Options, activeIndexStory: number = 0) {
-    const element = elements[activeSlideIndex];
+export default function playStory(param: paramPlayStory) {
+    
+    const element = param.slidesStoriesFs[param.activeIndex];
+    const options: Options = param.optionsSfs;
 
     const speedChangeItems: number = options.speedStory;
     const speedProgressItems: number = speedChangeItems / 12;
@@ -14,8 +17,7 @@ export default function playStory(wrapper: Element, elements: NodeListOf<Element
 
     const countItems: number = progressItems.length - 1;
 
-    let indexActiveItem: number = activeIndexStory;
-    let nextItemTimerID: any = null;
+    let indexActiveItem: number = param.activeIndexStory;
     let animProgressBgTimerID: any = null;
 
     playStory(indexActiveItem);
@@ -56,26 +58,14 @@ export default function playStory(wrapper: Element, elements: NodeListOf<Element
         }, speedProgressItems);
     }
 
-    function removeActiveClass(index: number) {
-        if (progressItems[index].classList.contains('active')) progressItems[index].classList.remove('active');
-        if (pictureItems[index].classList.contains('active')) pictureItems[index].classList.remove('active');
-        if (index < countItems) index++, removeActiveClass(index);
-    }
-
-    function removeResAnimProgressBg(index: number) {
-        const bgItem = progressItemsBg[index] as HTMLElement;
-        bgItem.style.width = 0 + '%';
-        if (index < countItems) index++, removeResAnimProgressBg(index);
-    }
-
     function createEventEndAnimSlide() {
-        wrapper.dispatchEvent(new CustomEvent("endAnimationSlide", {
-            detail: { animSlide: false, activeSlide: activeSlideIndex, intervals: [animProgressBgTimerID] }
+        param.wrapperStoriesFs.dispatchEvent(new CustomEvent("endAnimationSlide", {
+            detail: { animSlide: false, activeSlide: param.activeIndex, intervals: [animProgressBgTimerID] }
         }));
     }
 
     function createEventChangeItem(index: number) {
-        wrapper.dispatchEvent(new CustomEvent("changeItem", {
+        param.wrapperStoriesFs.dispatchEvent(new CustomEvent("changeItem", {
             detail: { intervals: [animProgressBgTimerID], index: index }
         }));
     }

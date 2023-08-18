@@ -1,21 +1,24 @@
-import { Options } from "../types/options";
 
-export default function itemStories(elements: NodeListOf<Element>, activeSlideIndex: number, options: Options) {
+export default function itemStories(wrapper: Element, elements: NodeListOf<Element>) {
 
     let pictureItems: NodeListOf<Element>;
     let storiesProgressItems: NodeListOf<Element>;
     let index = 0;
 
-    elements.forEach(elements => {
-        pictureItems = elements.querySelectorAll('.stories-fs__inner');
-        storiesProgressItems = elements.querySelectorAll('.stories-fs__progress-item');
+    elements.forEach((elements, activeIndex) => {
+        const storiesProgressItem = elements.querySelectorAll('.stories-fs__progress-item');
 
-        storiesProgressItems.forEach(element => {
-            console.log(element);
-            
+        storiesProgressItem.forEach((subElement, activeItem) => {
+            subElement.addEventListener('click', () => {
+                createEventClickItem(activeIndex, activeItem);
+            });
         })
     });
 
-
+    function createEventClickItem(activeIndex: number, activeItem: number) {
+        wrapper.dispatchEvent(new CustomEvent("clickItem", {
+            detail: { activeIndex: activeIndex, activeItem: activeItem }
+        }));
+    }
 
 }
