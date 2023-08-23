@@ -38,3 +38,8 @@ export function removeIntervals(timers: Array<number>) {
         });
     }
 }
+
+export function truncated(num: number, decimalPlaces: number) {
+    let numPowerConverter = Math.pow(10, decimalPlaces);
+    return ~~(num * numPowerConverter) / numPowerConverter;
+}
