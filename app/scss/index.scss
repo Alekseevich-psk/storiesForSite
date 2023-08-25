@@ -96,6 +96,13 @@ body {
     overflow-x: hidden;
 }
 
+.main__btn {
+
+    &.disabled {
+        opacity: 0.3;
+    }
+}
+
 .hide {
     display: none;
 }

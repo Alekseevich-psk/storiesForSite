@@ -5,9 +5,9 @@ export default function playStory(param: paramPlayStory) {
     
     const element = param.slidesStoriesFs[param.activeIndex];
     const options: Options = param.optionsSfs;
-
-    const speedChangeItems: number = options.speedStory;
-    const speedProgressItems: number = speedChangeItems / 12;
+    console.log(options.speedStory / 100);
+    
+    const speedStory: number = options.speedStory / 100;
 
     const progressItems = element.querySelectorAll('.stories-fs__progress-item');
     const progressItemsBg = element.querySelectorAll('.stories-fs__progress-bg');
@@ -35,8 +35,8 @@ export default function playStory(param: paramPlayStory) {
 
     function animProgressBg(index: number) {
         const bgItem = progressItemsBg[index] as HTMLElement;
-        let start = 10;
-        let step = 10;
+        let start = 1;
+        let step = 1;
 
         animProgressBgTimerID = setInterval(() => {
             bgItem.style.width = start + '%';
@@ -55,7 +55,7 @@ export default function playStory(param: paramPlayStory) {
                     createEventEndAnimSlide();
                 }
             }
-        }, speedProgressItems);
+        }, speedStory);
     }
 
     function createEventEndAnimSlide() {
