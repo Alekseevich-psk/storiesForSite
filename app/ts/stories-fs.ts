@@ -159,7 +159,10 @@ class StoriesFs {
         });
 
         this.wrapperStoriesFs.addEventListener('changeFullScreenMode', (event: CustomEvent) => {
-            if (event.detail.activeIndex) this.activeIndexSlide = event.detail.activeIndex;
+
+            if (event.detail.activeIndex || event.detail.activeIndex === 0) {
+                this.activeIndexSlide = event.detail.activeIndex;
+            }
 
             this.widthSlide = widthSlides(this.wrapperStoriesFs, this.slidesStoriesFs, options, event.detail.fullScreen);
             this.countFirstActiveSlides = this.getCountSlidesInWrapWindow();
@@ -180,9 +183,9 @@ class StoriesFs {
         this.scrollTrack(this.activeIndexSlide + 1);
     }
 
-    private scrollTrack(newActiveIndexSlide: number,) {
+    private scrollTrack(newActiveIndexSlide: number,) {       
         if (this.playAnimScroll) return;
-        if (newActiveIndexSlide < 0 || newActiveIndexSlide > this.slidesStoriesFs.length - 1) return;
+        if (newActiveIndexSlide < 0 || newActiveIndexSlide > this.slidesStoriesFs.length - 1 || this.countLastActiveSlides < 0) return;
         this.updateStory();
 
         let speedAnimNextSlide: number = this.optionsSfs.speedAnimNextSlide;
@@ -201,23 +204,24 @@ class StoriesFs {
             direction = 'prev';
         }
 
-        if (!this.fullScreenMode) {
-            if (newActiveIndexSlide >= this.countLastActiveSlides && direction === 'next') {
-                this.activeIndexSlide = this.slidesStoriesFs.length - 1;
-            }
-
-            if ((newActiveIndexSlide - this.countLastActiveSlides) <= 0 && direction === 'prev') {
-                this.activeIndexSlide = 0;
-            }
-        }
-
         start = this.countScrollWrapper;
         end = this.countScrollWrapper = (direction === 'next') ? (start + this.widthSlide) : (start - this.widthSlide);
         period = (start < end) ? Math.ceil((end - start) / speedAnimNextSlide) : Math.ceil((start - end) / speedAnimNextSlide);
         hidePartTrack = (this.slidesStoriesFs.length - this.countFirstActiveSlides) * this.widthSlide;
 
-        (truncated(end, 0) <= 0) ? offBtnArrowPrev(this.arrowsBtnEl) : onBtnArrowPrev(this.arrowsBtnEl);
-        (truncated(end, 0) >= truncated(hidePartTrack, 0)) ? offBtnArrowNext(this.arrowsBtnEl) : onBtnArrowNext(this.arrowsBtnEl);
+        if (truncated(end, 0) <= 0) {
+            offBtnArrowPrev(this.arrowsBtnEl);
+            this.activeIndexSlide = 0;
+        } else {
+            onBtnArrowPrev(this.arrowsBtnEl);
+        }
+
+        if (truncated(end, 0) >= truncated(hidePartTrack, 0)) {
+            offBtnArrowNext(this.arrowsBtnEl);
+            this.activeIndexSlide = this.slidesStoriesFs.length - 1;
+        } else {
+            onBtnArrowNext(this.arrowsBtnEl);
+        }
 
         if (truncated(end, 0) <= truncated(hidePartTrack, 0)) this.scrollTrackAnimation(start, end, period, direction);
         if (this.fullScreenMode) this.playStory();
@@ -226,11 +230,27 @@ class StoriesFs {
     private scrollTrackOnActiveSlide(activeIndexSlide: number) {
         let distance = this.widthSlide * activeIndexSlide;
 
-        if (activeIndexSlide <= this.countFirstActiveSlides - 1) distance = 0;
-        if (activeIndexSlide > this.countLastActiveSlides) distance = this.widthSlide * this.countLastActiveSlides;
+        if (activeIndexSlide === 0) {
+            distance = 0;
+            offBtnArrowPrev(this.arrowsBtnEl);
+        } else {
+            onBtnArrowPrev(this.arrowsBtnEl);
+        }
 
-        (activeIndexSlide === 0) ? offBtnArrowPrev(this.arrowsBtnEl) : onBtnArrowPrev(this.arrowsBtnEl);
-        (activeIndexSlide === this.slidesStoriesFs.length - 1) ? offBtnArrowNext(this.arrowsBtnEl) : onBtnArrowNext(this.arrowsBtnEl);
+        if (activeIndexSlide > this.countLastActiveSlides && this.countLastActiveSlides > 0) {
+            distance = this.widthSlide * this.countLastActiveSlides;
+            offBtnArrowNext(this.arrowsBtnEl);
+        } else {
+            onBtnArrowNext(this.arrowsBtnEl);
+        }
+
+        if (activeIndexSlide === this.slidesStoriesFs.length - 1) offBtnArrowNext(this.arrowsBtnEl);
+
+        if (this.countLastActiveSlides < 0) {
+            offBtnArrowPrev(this.arrowsBtnEl);
+            offBtnArrowNext(this.arrowsBtnEl);
+            distance = 0;
+        }
 
         this.trackStoriesFs.style.transform = `translate(${(-1 * distance) + 'px'}, 0)`;
         this.countScrollWrapper = distance;
