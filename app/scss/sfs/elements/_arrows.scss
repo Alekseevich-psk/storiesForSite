@@ -3,6 +3,10 @@
         &.hide-arrows {
             display: none;
         }
+
+        @media(max-width: 768px) {
+            display: none;
+        }
     }
 
     &__arrow {
