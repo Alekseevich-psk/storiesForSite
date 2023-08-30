@@ -91,7 +91,8 @@ class StoriesFs {
             slidesStoriesFs: this.slidesStoriesFs,
             optionsSfs: this.optionsSfs,
             activeIndex: this.activeIndexSlide,
-            activeIndexStory: this.activeIndexStory
+            activeIndexStory: this.activeIndexStory,
+            prevSlide: false
         }
 
         this.wrapperStoriesFs.addEventListener('holdEvent', (event: CustomEvent) => {
@@ -183,7 +184,7 @@ class StoriesFs {
         this.scrollTrack(this.activeIndexSlide + 1);
     }
 
-    private scrollTrack(newActiveIndexSlide: number,) {       
+    private scrollTrack(newActiveIndexSlide: number,) {
         if (this.playAnimScroll) return;
         if (newActiveIndexSlide < 0 || newActiveIndexSlide > this.slidesStoriesFs.length - 1 || this.countLastActiveSlides < 0) return;
         this.updateStory();
@@ -223,8 +224,14 @@ class StoriesFs {
             onBtnArrowNext(this.arrowsBtnEl);
         }
 
-        if (truncated(end, 0) <= truncated(hidePartTrack, 0)) this.scrollTrackAnimation(start, end, period, direction);
-        if (this.fullScreenMode) this.playStory();
+        if (truncated(end, 0) <= truncated(hidePartTrack, 0)) {
+            this.scrollTrackAnimation(start, end, period, direction);
+        }
+
+        if (this.fullScreenMode) {
+            (direction === 'prev') ? this.paramPlayStory.prevSlide = true : this.paramPlayStory.prevSlide = false;
+            this.playStory();
+        }
     }
 
     private scrollTrackOnActiveSlide(activeIndexSlide: number) {
@@ -276,6 +283,7 @@ class StoriesFs {
         this.updateStory();
         this.updateIndex();
         playStory(this.paramPlayStory);
+        this.paramPlayStory.prevSlide = false;
     }
 
     private updateStory() {

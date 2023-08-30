@@ -3,5 +3,6 @@ export type paramPlayStory = {
     slidesStoriesFs?: NodeListOf<Element>;
     activeIndex?: number,
     optionsSfs?: object,
-    activeIndexStory?: number
+    activeIndexStory?: number,
+    prevSlide?: boolean
 }
