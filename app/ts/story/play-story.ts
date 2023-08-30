@@ -2,12 +2,8 @@ import { Options } from "../types/options";
 import { paramPlayStory } from '../types/param-play-story';
 
 export default function playStory(param: paramPlayStory) {
-    console.log(param, window.screen.width);
-
     const element = param.slidesStoriesFs[param.activeIndex];
     const options: Options = param.optionsSfs;
-    const widthWindow = window.screen.width;
-
     const speedStory: number = options.speedStory / 100;
 
     const progressItems = element.querySelectorAll('.stories-fs__progress-item');
@@ -20,10 +16,6 @@ export default function playStory(param: paramPlayStory) {
 
     let indexActiveItem: number = param.activeIndexStory;
     let animProgressBgTimerID: any = null;
-
-    if (widthWindow <= 768 && param.prevSlide) {
-        indexActiveItem = progressItems.length - 1;
-    }
 
     playStory(indexActiveItem);
 

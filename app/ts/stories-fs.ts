@@ -169,6 +169,7 @@ class StoriesFs {
             this.countFirstActiveSlides = this.getCountSlidesInWrapWindow();
             this.countLastActiveSlides = this.slidesStoriesFs.length - this.countFirstActiveSlides;
             this.countScrollWrapper = 0;
+            this.activeIndexStory = 0;
             this.fullScreenMode = event.detail.fullScreen;
 
             this.scrollTrackOnActiveSlide(this.activeIndexSlide);
@@ -287,6 +288,11 @@ class StoriesFs {
     }
 
     private updateStory() {
+        if (this.paramPlayStory.prevSlide) {
+            const progressItems = this.slidesStoriesFs[this.activeIndexSlide].querySelectorAll('.stories-fs__progress-item');
+            this.activeIndexStory = progressItems.length - 1;
+        }
+
         offSlide(this.slidesStoriesFs, this.activeIndexSlide, this.activeIndexStory, this.storyTimersId);
     }
 
